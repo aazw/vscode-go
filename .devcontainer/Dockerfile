@@ -29,3 +29,7 @@ RUN apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plug
 # dockerfmt
 # https://github.com/reteps/dockerfmt
 RUN go install github.com/reteps/dockerfmt@latest
+
+# jq (latest)
+# https://github.com/jqlang/jq
+COPY --from=ghcr.io/jqlang/jq:1.7.1 /jq /usr/local/bin/
