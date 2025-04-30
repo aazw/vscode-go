@@ -1,0 +1,43 @@
+{
+  "name": "vsc-go",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-azuretools.vscode-docker",
+        "esbenp.prettier-vscode",
+        "emeraldwalk.RunOnSave",
+        "golang.go"
+      ],
+      "settings": {
+        "emeraldwalk.runonsave": {
+          "commands": [
+            {
+              "match": "\\bDockerfile$",
+              "cmd": "dockerfmt -w \"${file}\""
+            }
+          ]
+        }
+      }
+    }
+  },
+  "mounts": [
+    {
+      "type": "bind",
+      "source": "/var/run/docker.sock",
+      "target": "/var/run/docker.sock"
+    }
+  ],
+  "remoteUser": "root",
+  "remoteEnv": {
+    "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+  },
+  "runArgs": [
+    "--name",
+    "vsc-go",
+    "--add-host",
+    "host.docker.internal:host-gateway"
+  ]
+}
