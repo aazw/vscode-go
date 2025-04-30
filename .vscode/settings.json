@@ -10,5 +10,13 @@
   "[go]": {
     "editor.defaultFormatter": "golang.go",
     "editor.formatOnSave": true
+  },
+  "emeraldwalk.runonsave": {
+    "commands": [
+      {
+        "match": "\\bDockerfile$",
+        "cmd": "dockerfmt -w \"${file}\""
+      }
+    ]
   }
 }

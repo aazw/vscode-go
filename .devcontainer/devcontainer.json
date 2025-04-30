@@ -10,17 +10,7 @@
         "esbenp.prettier-vscode",
         "emeraldwalk.RunOnSave",
         "golang.go"
-      ],
-      "settings": {
-        "emeraldwalk.runonsave": {
-          "commands": [
-            {
-              "match": "\\bDockerfile$",
-              "cmd": "dockerfmt -w \"${file}\""
-            }
-          ]
-        }
-      }
+      ]
     }
   },
   "mounts": [
