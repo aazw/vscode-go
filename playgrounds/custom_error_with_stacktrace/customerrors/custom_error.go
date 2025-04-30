@@ -99,12 +99,12 @@ func (e *CustomError) ContextMsg() string {
 func (e *CustomError) LogValue() slog.Value {
 
 	attrs := []slog.Attr{
-		slog.String("errcode", e.errCode),
-		slog.String("metamsg", e.metaMsg),
+		slog.String("code", e.errCode),
+		slog.String("description", e.metaMsg),
 	}
 
 	if e.ctxMsg != "" {
-		attrs = append(attrs, slog.String("ctxmsg", e.ctxMsg))
+		attrs = append(attrs, slog.String("message", e.ctxMsg))
 	}
 
 	if e.cause != nil {
