@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"log/slog"
 	"os"
 
@@ -10,13 +11,26 @@ import (
 )
 
 func main() {
-	// handler := slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
-	// 	AddSource: true,
-	// })
+	var logFormat string
+	flag.StringVar(&logFormat, "log-format", "text", "format: (json|pretty-text|text)")
+	flag.Parse()
 
-	handler := slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
-		AddSource: true,
-	})
+	var handler slog.Handler
+	switch logFormat {
+	case "json", "JSON", "Json":
+		handler = slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
+			AddSource: true,
+		})
+	case "pretty-text", "prettyText", "ptext":
+		handler = customerrors.NewPrettyTextHandler(os.Stdout, &slog.HandlerOptions{
+			AddSource: true,
+		})
+	default:
+		handler = slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
+			AddSource: true,
+		})
+	}
+
 	logger := slog.New(handler)
 
 	logger.Error("error message", "err", func001())
@@ -27,7 +41,7 @@ func func001() error {
 }
 
 func func002() error {
-	return func003()
+	return customerrors.AppendContextualMessage(func003(), "huge")
 }
 
 func func003() error {

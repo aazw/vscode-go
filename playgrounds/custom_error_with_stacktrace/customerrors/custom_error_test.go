@@ -3,11 +3,11 @@ package customerrors
 import (
 	"bytes"
 	"encoding/json"
+	stdErrors "errors"
+	"fmt"
+	"log/slog"
 	"strings"
 	"testing"
-
-	stdErrors "errors"
-	"log/slog"
 
 	crErrors "github.com/cockroachdb/errors"
 )
@@ -43,16 +43,28 @@ func TestCustomError_Basic(t *testing.T) {
 	if got := ce.Code(); got != "UNKNOWN_ERROR" {
 		t.Errorf("Code() = %q; want %q", got, "UNKNOWN_ERROR")
 	}
-	if got := ce.MetaMsg(); got != "an unknown error occurred" {
-		t.Errorf("MetaMsg() = %q; want %q", got, "an unknown error occurred")
-	}
-	if got := ce.ContextMsg(); got != "ctx msg" {
-		t.Errorf("ContextMsg() = %q; want %q", got, "ctx msg")
+	if got := ce.Detail(); got != "an unknown error occurred" {
+		t.Errorf("Detail() = %q; want %q", got, "an unknown error occurred")
 	}
 
-	// 4) stack フィールド が埋まっていること
-	if ce.stack == nil {
-		t.Error("stack is nil; want non-nil ReportableStackTrace")
+	// 4) Contexts() のテスト
+	cxtMsgs := ce.CtxMsgs()
+	if len(cxtMsgs) != 1 {
+		t.Errorf("Contexts() len = %d; want %d", len(cxtMsgs), 1)
+	} else {
+		wantMsg := "ctx msg"
+		if got := cxtMsgs[0].Message; got != wantMsg {
+			t.Errorf("Contexts()[0].Msg = %q; want %q", got, wantMsg)
+		}
+		if cxtMsgs[0].File == "" || cxtMsgs[0].Line <= 0 {
+			t.Errorf("Contexts()[0] = %+v; want non-empty File and positive Line", cxtMsgs[0])
+		}
+	}
+
+	// 5) fmt.Sprintf("%+v", err) で少なくとも一つのスタックフレームが出力されること
+	formatted := fmt.Sprintf("%+v", err)
+	if !strings.Contains(formatted, "\n\t") {
+		t.Errorf("%%+v output missing any stacktrace frame: %s", formatted)
 	}
 }
 
@@ -83,29 +95,40 @@ func TestCustomError_JSONLogging(t *testing.T) {
 		t.Fatalf("rec[\"err\"] has wrong type: %T", rec["err"])
 	}
 
-	// 各キーの検証
-	tests := []struct {
-		key, want string
-	}{
-		{"errcode", "UNKNOWN_ERROR"},
-		{"metamsg", "an unknown error occurred"},
-		{"ctxmsg", "ctx msg"},
+	// code / detail を検証
+	if got, _ := obj["code"].(string); got != "UNKNOWN_ERROR" {
+		t.Errorf(`json err.code = %q; want "UNKNOWN_ERROR"`, got)
 	}
-	for _, tt := range tests {
-		if got, _ := obj[tt.key].(string); got != tt.want {
-			t.Errorf("json err.%s = %q; want %q", tt.key, got, tt.want)
-		}
+	if got, _ := obj["detail"].(string); got != "an unknown error occurred" {
+		t.Errorf(`json err.detail = %q; want "an unknown error occurred"`, got)
 	}
 
-	// stacktrace がオブジェクトになっており、
-	// その中の frames が非空スライスであることをチェック
+	// context は配列、最初の要素に message があること
+	ctxRaw, ok := obj["context"].([]any)
+	if !ok || len(ctxRaw) != 1 {
+		t.Fatalf("json err.context type = %T, len=%d; want []any len 1", ctxRaw, len(ctxRaw))
+	}
+	ctx0, ok := ctxRaw[0].(map[string]any)
+	if !ok {
+		t.Fatalf("json err.context[0] type = %T; want map[string]any", ctxRaw[0])
+	}
+	if msg, _ := ctx0["message"].(string); msg != "ctx msg" {
+		t.Errorf(`json err.context[0].message = %q; want "ctx msg"`, msg)
+	}
+
+	// cause を検証
+	if ca, _ := obj["cause"].(string); ca != "root cause" {
+		t.Errorf(`json err.cause = %q; want "root cause"`, ca)
+	}
+
+	// stacktrace.frames が非空スライスであることをチェック
 	stRaw, exists := obj["stacktrace"]
 	if !exists {
 		t.Error("json err.stacktrace missing")
 	}
 	stObj, ok := stRaw.(map[string]any)
 	if !ok {
-		t.Fatalf("json err.stacktrace type = %T; want object containing frames", stRaw)
+		t.Fatalf("json err.stacktrace type = %T; want object", stRaw)
 	}
 	framesRaw, exists := stObj["frames"]
 	if !exists {
@@ -114,5 +137,86 @@ func TestCustomError_JSONLogging(t *testing.T) {
 	framesArr, ok := framesRaw.([]any)
 	if !ok || len(framesArr) == 0 {
 		t.Errorf("json err.stacktrace.frames = %v; want non-empty array", framesRaw)
+	}
+}
+
+// Test WithContextualMessagef produces a formatted context message.
+func TestCustomError_WithContextualMessagef(t *testing.T) {
+	err := ErrUnknown(
+		WithContextualMessagef("value=%d", 42),
+	)
+	ce := &CustomError{}
+	if !stdErrors.As(err, &ce) {
+		t.Fatal("could not cast to *CustomError")
+	}
+	msgs := ce.CtxMsgs()
+	if len(msgs) != 1 {
+		t.Fatalf("CtxMsgs len = %d; want 1", len(msgs))
+	}
+	want := "value=42"
+	if got := msgs[0].Message; got != want {
+		t.Errorf("CtxMsgs()[0].Message = %q; want %q", got, want)
+	}
+}
+
+// Test multiple WithContextualMessage calls accumulate contexts in order.
+func TestCustomError_MultipleContexts(t *testing.T) {
+	err := ErrUnknown(
+		WithContextualMessage("first"),
+		WithContextualMessage("second"),
+	)
+	ce := &CustomError{}
+	if !stdErrors.As(err, &ce) {
+		t.Fatal("could not cast to *CustomError")
+	}
+	msgs := ce.CtxMsgs()
+	if len(msgs) != 2 {
+		t.Fatalf("CtxMsgs len = %d; want 2", len(msgs))
+	}
+	if msgs[0].Message != "first" || msgs[1].Message != "second" {
+		t.Errorf("messages = %q; want [\"first\" \"second\"]", []string{msgs[0].Message, msgs[1].Message})
+	}
+}
+
+// Test nested CustomError causes still unwrap to the original cause.
+func TestCustomError_NestedCause(t *testing.T) {
+	root := stdErrors.New("root")
+	inner := ErrUnknown(WithCause(root))
+	outer := ErrUnknown(WithCause(inner))
+	if !stdErrors.Is(outer, root) {
+		t.Errorf("errors.Is(outer, root) = false; want true")
+	}
+}
+
+// Test no-options ErrUnknown returns only code and detail.
+func TestCustomError_NoOptions(t *testing.T) {
+	err := ErrUnknown()
+	s := err.Error()
+	want := "[UNKNOWN_ERROR] an unknown error occurred"
+	if s != want {
+		t.Errorf("Error() = %q; want %q", s, want)
+	}
+	ce := &CustomError{}
+	if !stdErrors.As(err, &ce) {
+		t.Fatal("could not cast to *CustomError")
+	}
+	if len(ce.CtxMsgs()) != 0 {
+		t.Errorf("CtxMsgs len = %d; want 0", len(ce.CtxMsgs()))
+	}
+}
+
+// Test %+v includes error code then in-app stack frames in correct order.
+func TestCustomError_FormatStackOrder(t *testing.T) {
+	// Create an error and format with %+v
+	err := ErrUnknown()
+	out := fmt.Sprintf("%+v", err)
+	// Should start with [UNKNOWN_ERROR]
+	if !strings.HasPrefix(out, "[UNKNOWN_ERROR]") {
+		t.Errorf("%%+v output = %q; want prefix %q", out, "[UNKNOWN_ERROR]")
+	}
+
+	// スタックトレースのインデント付きフレーム行が含まれることを確認
+	if !strings.Contains(out, "\n\t") {
+		t.Errorf("%%+v output missing in-app frame: %s", out)
 	}
 }
