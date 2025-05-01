@@ -7,7 +7,7 @@ import (
 
 	"github.com/cockroachdb/errors"
 
-	"github.com/aazw/vscode-go/playgrounds/custom_error_with_stacktrace/customerrors"
+	"github.com/aazw/vscode-go/playgrounds/custom_error_with_stacktrace/cerrors"
 )
 
 func main() {
@@ -22,7 +22,7 @@ func main() {
 			AddSource: true,
 		})
 	case "pretty-text", "prettyText", "ptext":
-		handler = customerrors.NewPrettyTextHandler(os.Stdout, &slog.HandlerOptions{
+		handler = cerrors.NewPrettyTextHandler(os.Stdout, &slog.HandlerOptions{
 			AddSource: true,
 		})
 	default:
@@ -41,12 +41,12 @@ func func001() error {
 }
 
 func func002() error {
-	return customerrors.AppendContextualMessage(func003(), "huge")
+	return cerrors.AppendContextualMessage(func003(), "huge")
 }
 
 func func003() error {
-	return customerrors.ErrUnknown.New(
-		customerrors.WithContextualMessage("hello world"),
-		customerrors.WithCause(errors.New("hoge error")),
+	return cerrors.ErrUnknown.New(
+		cerrors.WithContextualMessage("hello world"),
+		cerrors.WithCause(errors.New("hoge error")),
 	)
 }

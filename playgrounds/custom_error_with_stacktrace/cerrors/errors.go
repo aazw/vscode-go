@@ -1,4 +1,4 @@
-package customerrors
+package cerrors
 
 import (
 	"fmt"
@@ -14,7 +14,7 @@ func init() {
 	// 単体テストでも検知可能
 	if len(constructors) != int(ErrorKindCount) {
 		panic(fmt.Sprintf(
-			"customerrors: constructors マップの要素数(%d) が ErrorKindCount(%d) と一致しません",
+			"cerrors: constructors マップの要素数(%d) が ErrorKindCount(%d) と一致しません",
 			len(constructors), ErrorKindCount,
 		))
 	}
