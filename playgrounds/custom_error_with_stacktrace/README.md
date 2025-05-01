@@ -7,20 +7,31 @@
 ## 例
 
 ```bash
-$ go run main.go | jq
+$ go run main.go -log-format json | jq
 {
-  "time": "2025-04-30T15:18:15.019087433Z",
+  "time": "2025-05-01T05:13:13.044973314Z",
   "level": "ERROR",
   "source": {
     "function": "main.main",
     "file": "/workspaces/vscode-go/playgrounds/custom_error_with_stacktrace/main.go",
-    "line": 22
+    "line": 36
   },
   "msg": "error message",
   "err": {
     "code": "UNKNOWN_ERROR",
-    "description": "an unknown error occurred",
-    "message": "hello world",
+    "detail": "an unknown error occurred",
+    "context": [
+      {
+        "message": "hello world",
+        "file": "/workspaces/vscode-go/playgrounds/custom_error_with_stacktrace/main.go",
+        "line": 48
+      },
+      {
+        "message": "huge",
+        "file": "/workspaces/vscode-go/playgrounds/custom_error_with_stacktrace/main.go",
+        "line": 44
+      }
+    ],
     "cause": "hoge error",
     "stacktrace": {
       "frames": [
@@ -45,7 +56,7 @@ $ go run main.go | jq
           "module": "main",
           "filename": "/workspaces/vscode-go/playgrounds/custom_error_with_stacktrace/main.go",
           "abs_path": "/workspaces/vscode-go/playgrounds/custom_error_with_stacktrace/main.go",
-          "lineno": 22,
+          "lineno": 36,
           "in_app": true
         },
         {
@@ -53,7 +64,7 @@ $ go run main.go | jq
           "module": "main",
           "filename": "/workspaces/vscode-go/playgrounds/custom_error_with_stacktrace/main.go",
           "abs_path": "/workspaces/vscode-go/playgrounds/custom_error_with_stacktrace/main.go",
-          "lineno": 26,
+          "lineno": 40,
           "in_app": true
         },
         {
@@ -61,7 +72,7 @@ $ go run main.go | jq
           "module": "main",
           "filename": "/workspaces/vscode-go/playgrounds/custom_error_with_stacktrace/main.go",
           "abs_path": "/workspaces/vscode-go/playgrounds/custom_error_with_stacktrace/main.go",
-          "lineno": 30,
+          "lineno": 44,
           "in_app": true
         },
         {
@@ -69,7 +80,7 @@ $ go run main.go | jq
           "module": "main",
           "filename": "/workspaces/vscode-go/playgrounds/custom_error_with_stacktrace/main.go",
           "abs_path": "/workspaces/vscode-go/playgrounds/custom_error_with_stacktrace/main.go",
-          "lineno": 34,
+          "lineno": 48,
           "in_app": true
         }
       ]
