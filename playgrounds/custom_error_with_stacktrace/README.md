@@ -1,4 +1,9 @@
-# 例
+# playgrounds/custom_error_with_stacktrace
+
+* https://github.com/cockroachdb/errors
+* https://github.com/getsentry/sentry-go
+
+## 例
 
 ```bash
 $ go run main.go -log-format json | jq
