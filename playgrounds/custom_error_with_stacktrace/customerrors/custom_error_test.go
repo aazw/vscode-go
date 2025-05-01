@@ -15,7 +15,7 @@ import (
 func TestCustomError_Basic(t *testing.T) {
 	// cause に標準 errors を使ってみる
 	cause := stdErrors.New("root cause")
-	err := ErrUnknown(
+	err := ErrUnknown.New(
 		WithContextualMessage("ctx msg"),
 		WithCause(cause),
 	)
@@ -77,7 +77,7 @@ func TestCustomError_JSONLogging(t *testing.T) {
 	})
 	logger := slog.New(handler)
 
-	err := ErrUnknown(
+	err := ErrUnknown.New(
 		WithContextualMessage("ctx msg"),
 		WithCause(crErrors.New("root cause")),
 	)
@@ -142,7 +142,7 @@ func TestCustomError_JSONLogging(t *testing.T) {
 
 // Test WithContextualMessagef produces a formatted context message.
 func TestCustomError_WithContextualMessagef(t *testing.T) {
-	err := ErrUnknown(
+	err := ErrUnknown.New(
 		WithContextualMessagef("value=%d", 42),
 	)
 	ce := &CustomError{}
@@ -161,7 +161,7 @@ func TestCustomError_WithContextualMessagef(t *testing.T) {
 
 // Test multiple WithContextualMessage calls accumulate contexts in order.
 func TestCustomError_MultipleContexts(t *testing.T) {
-	err := ErrUnknown(
+	err := ErrUnknown.New(
 		WithContextualMessage("first"),
 		WithContextualMessage("second"),
 	)
@@ -181,8 +181,8 @@ func TestCustomError_MultipleContexts(t *testing.T) {
 // Test nested CustomError causes still unwrap to the original cause.
 func TestCustomError_NestedCause(t *testing.T) {
 	root := stdErrors.New("root")
-	inner := ErrUnknown(WithCause(root))
-	outer := ErrUnknown(WithCause(inner))
+	inner := ErrUnknown.New(WithCause(root))
+	outer := ErrUnknown.New(WithCause(inner))
 	if !stdErrors.Is(outer, root) {
 		t.Errorf("errors.Is(outer, root) = false; want true")
 	}
@@ -190,7 +190,7 @@ func TestCustomError_NestedCause(t *testing.T) {
 
 // Test no-options ErrUnknown returns only code and detail.
 func TestCustomError_NoOptions(t *testing.T) {
-	err := ErrUnknown()
+	err := ErrUnknown.New()
 	s := err.Error()
 	want := "[UNKNOWN_ERROR] an unknown error occurred"
 	if s != want {
@@ -208,7 +208,7 @@ func TestCustomError_NoOptions(t *testing.T) {
 // Test %+v includes error code then in-app stack frames in correct order.
 func TestCustomError_FormatStackOrder(t *testing.T) {
 	// Create an error and format with %+v
-	err := ErrUnknown()
+	err := ErrUnknown.New()
 	out := fmt.Sprintf("%+v", err)
 	// Should start with [UNKNOWN_ERROR]
 	if !strings.HasPrefix(out, "[UNKNOWN_ERROR]") {

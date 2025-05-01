@@ -45,7 +45,7 @@ func func002() error {
 }
 
 func func003() error {
-	return customerrors.ErrUnknown(
+	return customerrors.ErrUnknown.New(
 		customerrors.WithContextualMessage("hello world"),
 		customerrors.WithCause(errors.New("hoge error")),
 	)

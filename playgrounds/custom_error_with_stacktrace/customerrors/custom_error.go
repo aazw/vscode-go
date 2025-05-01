@@ -93,31 +93,6 @@ func (e *CustomError) AddContextualMessagef(format string, args ...any) {
 	e.addContextualMessage(fmt.Sprintf(format, args...), 1)
 }
 
-// newCustomError はエラーコードと詳細メッセージからCustomErrorを初期化し、オプションを適用するファクトリ関数を返す
-func newCustomError(errCode string, detail string) func(...Option) error {
-
-	return func(options ...Option) error {
-		customError := &CustomError{
-			errCode: errCode,
-			detail:  detail,
-		}
-
-		// Functional Options Pattern でのオプションの処理
-		for _, option := range options {
-			option(customError)
-		}
-
-		// １. withstack でラップして生のスタックを取る
-		wrapped := crErrors.WithStackDepth(customError, 1)
-
-		// ２. 取れた ReportableStackTrace を自前フィールドに格納
-		customError.stack = crErrors.GetReportableStackTrace(wrapped)
-
-		// ３. CustomError 本体を返す（ここだけで stack 情報持ち回り）
-		return customError
-	}
-}
-
 // Error は CustomError のコード、詳細メッセージ、追加されたコンテキスト情報、および原因エラーを組み合わせた文字列表現を返す
 // 組み込みの error インターフェースを実装
 func (e *CustomError) Error() string {
