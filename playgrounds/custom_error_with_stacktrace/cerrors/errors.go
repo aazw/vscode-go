@@ -7,9 +7,9 @@ import (
 )
 
 func init() {
-	// センチネル (sentinel) の検証
-	// ErrorKind を追加したら必ず ErrorKindCount が一つ下に移動するため値が増える
-	// len(constructors)の値と比較することで、これが違えば自動的にずれを検知できる
+	// センチネル値 (sentinel) の検証
+	// ErrorKind を追加したら ErrorKindCount が一つ下に移動し、その値が必ず増える
+	// len(constructors)の値と比較することで、両者の値が違えば自動的にずれ(=constructors定義追加漏れ)を検知できる
 	// init() でプログラム起動時（またはテスト時）に即座にパニックを起こし検知できる
 	// 単体テストでも検知可能
 	if len(constructors) != int(ErrorKindCount) {
@@ -20,7 +20,7 @@ func init() {
 	}
 }
 
-// ErrorConstructor は CustomError を生成するコンストラクタオブジェクト
+// customErrorConstructor は CustomError を生成するコンストラクタオブジェクト
 // New メソッドでオプションを適用して CustomError を返す
 type customErrorConstructor struct {
 	errCode string
@@ -30,7 +30,7 @@ type customErrorConstructor struct {
 // ErrorKind は enum風に定義されたエラー種別を表す
 type ErrorKind int
 
-// New は ErrorConstructor の設定（コード／詳細）をもとに CustomError を作成し、Functional Options Pattern でカスタマイズして返す
+// New は 事前に定義されたErrorKindの情報をもとに CustomError を作成し、Functional Options Pattern でカスタマイズして返す
 func (ek ErrorKind) New(options ...Option) error {
 
 	ctor, ok := constructors[ek]
@@ -68,12 +68,14 @@ const (
 
 	// --- 新しい ErrorKind は常にこの上↑に追加する ---
 	//
-	// ErrorKindCount はセンチネル(配列やリストの終端を示す特別な値)であって、上記の要素数として使うためのもので、
-	// 一番最下部にあるべきものである ErrorKindCountの値とlen(constructors)の値をチェックすることで自動的にずれを検知できる
+	// ErrorKindCount はセンチネル値(sentinel/配列やリストの終端を示す特別な値)であって、上記の要素数として使うためのもので、
+	// 最下部にあることで iota によって、要素が追加されるたびにその値が増える.
+	// この一番最下部にあるべきものである ErrorKindCount の値と len(constructors) の値をチェックすることで自動的にずれを検知できる
+	// ずれ = constructorsへの定義追加漏れ
 	ErrorKindCount
 )
 
-// constructors は各 ErrorKind のカスタムエラーコンストラクタをキー付きで保持する
+// constructors は各 ErrorKind に対するカスタムエラーコンストラクタをキー付きで保持する
 var constructors = map[ErrorKind]customErrorConstructor{
 	ErrUnknown:      {"UNKNOWN_ERROR", "an unknown error occurred"},
 	ErrInvalidInput: {"INVALID_INPUT", "入力が無効です"},

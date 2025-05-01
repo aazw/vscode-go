@@ -16,7 +16,7 @@ type contextualMsg struct {
 	Line    int    `json:"line,omitempty"`    // 上記ファイル内の該当行番号
 }
 
-// CustomError はエラーコード、詳細メッセージ、実行時コンテキスト情報、原因エラー、およびスタックトレースを保持するカスタムエラー型
+// CustomError はカスタムエラー型で、エラーコード、詳細メッセージ、実行時コンテキスト情報、原因エラー、およびスタックトレースを保持
 type CustomError struct {
 	errCode string                         // エラーを一意二識別するコード
 	detail  string                         // エラー型を説明する静的な情報
@@ -66,7 +66,7 @@ func WithContextualMessagef(format string, args ...any) Option {
 	}
 }
 
-// WithCause はエラーの原因(err)をCustomErrorに設定する
+// WithCause はエラーの原因(err)を CustomError に設定する
 func WithCause(err error) Option {
 	return func(e *CustomError) {
 		e.cause = err
@@ -110,7 +110,7 @@ func (e *CustomError) Error() string {
 	return base
 }
 
-// Unwrap はerrors.Is/Asが原因エラーを処理できるようにする
+// Unwrap は errors.Is/As を処理できるようにする
 func (e *CustomError) Unwrap() error {
 	return e.cause
 }
@@ -120,7 +120,7 @@ func (e *CustomError) Code() string {
 	return e.errCode
 }
 
-// Detail は静的な詳細メッセージを返します
+// Detail は静的な詳細情報を返します
 func (e *CustomError) Detail() string {
 	return e.detail
 }
@@ -130,7 +130,7 @@ func (e *CustomError) CtxMsgs() []contextualMsg {
 	return e.ctxMsgs
 }
 
-// LogValue は構造化ロギングのためのslog.LogValuerを実装したもの
+// LogValue は構造化ロギングのための slog.LogValuer を実装したもの
 func (e *CustomError) LogValue() slog.Value {
 
 	attrs := []slog.Attr{
@@ -153,7 +153,7 @@ func (e *CustomError) LogValue() slog.Value {
 	return slog.GroupValue(attrs...)
 }
 
-// Format はfmt.Formatterを実装し、%+v指定子でスタックトレースの出力をサポートする
+// Format は fmt.Formatter を実装し、%+v指定子でスタックトレースの出力をサポートする
 func (e *CustomError) Format(f fmt.State, c rune) {
 	if c == 'v' && f.Flag('+') {
 		io.WriteString(f, e.Error())
