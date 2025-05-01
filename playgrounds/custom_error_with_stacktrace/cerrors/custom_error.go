@@ -18,7 +18,7 @@ type contextualMsg struct {
 
 // CustomError はカスタムエラー型で、エラーコード、詳細メッセージ、実行時コンテキスト情報、原因エラー、およびスタックトレースを保持
 type CustomError struct {
-	errCode string                         // エラーを一意二識別するコード
+	errCode string                         // エラーを一意に識別するコード
 	detail  string                         // エラー型を説明する静的な情報
 	ctxMsgs []contextualMsg                // 実行時のコンテキストを説明するメッセージ等情報 (contextual message)
 	cause   error                          // このエラーの原因となった元のエラー

@@ -1,10 +1,4 @@
-## 概要
-
-* カスタムエラーの実装例
-* StackTrace付きでの取り回しかた
-* slogでのStackTrace付きでのログの履き方
-
-## 例
+# 例
 
 ```bash
 $ go run main.go -log-format json | jq
