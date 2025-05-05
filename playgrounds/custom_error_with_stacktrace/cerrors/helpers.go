@@ -5,21 +5,31 @@ import (
 	"fmt"
 )
 
-// AppendContextualMessage は err が *CustomError の場合、AppendContextualMessage の呼び出し元をキャプチャしてコンテキストを追加する
-func AppendContextualMessage(err error, msg string) error {
+// AppendMessage は err が *CustomError の場合、AppendMessage の呼び出し元をキャプチャしてコンテキストを追加する
+func AppendMessage(err error, msg string) error {
 	var ce *CustomError
 	if errors.As(err, &ce) {
-		ce.addContextualMessage(msg, 2)
+		ce.addMessage(msg, 3)
 		return ce
 	}
 	return err
 }
 
-// AppendContextualMessagef は err が *CustomError の場合、AppendContextualMessagef の呼び出し元をキャプチャしてコンテキストを追加する
-func AppendContextualMessagef(err error, format string, args ...any) error {
+// AppendMessagef は err が *CustomError の場合、AppendMessagef の呼び出し元をキャプチャしてコンテキストを追加する
+func AppendMessagef(err error, format string, args ...any) error {
 	var ce *CustomError
 	if errors.As(err, &ce) {
-		ce.addContextualMessage(fmt.Sprintf(format, args...), 2)
+		ce.addMessage(fmt.Sprintf(format, args...), 3)
+		return ce
+	}
+	return err
+}
+
+// AppendCheckpoint
+func AppendCheckpoint(err error, options ...CheckpointOption) error {
+	var ce *CustomError
+	if errors.As(err, &ce) {
+		ce.addCheckpoint(3, options...)
 		return ce
 	}
 	return err

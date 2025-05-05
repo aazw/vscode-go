@@ -10,7 +10,7 @@ import (
 // k.New() が CustomError を返すことを検証する
 // 新しい ErrorKind を追加したら、以下の kinds スライスにも追加すること
 func TestErrorKindConstructors(t *testing.T) {
-	kinds := []ErrorKind{
+	kinds := []errorKind{
 		ErrUnknown,
 		ErrInvalidInput,
 		// 例: ErrFoo,

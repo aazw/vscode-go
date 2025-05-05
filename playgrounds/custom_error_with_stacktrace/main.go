@@ -37,16 +37,24 @@ func main() {
 }
 
 func func001() error {
-	return func002()
+	err := func002()
+	if err != nil {
+		return cerrors.AppendCheckpoint(err)
+	}
+	return nil
 }
 
 func func002() error {
-	return cerrors.AppendContextualMessage(func003(), "huge")
+	err := func003()
+	if err != nil {
+		return cerrors.AppendMessage(err, "huge")
+	}
+	return nil
 }
 
 func func003() error {
 	return cerrors.ErrUnknown.New(
-		cerrors.WithContextualMessage("hello world"),
+		cerrors.WithMessage("hello world"),
 		cerrors.WithCause(errors.New("hoge error")),
 	)
 }

@@ -66,20 +66,10 @@ func (h *PrettyTextHandler) Handle(ctx context.Context, r slog.Record) error {
 		return err
 	}
 
-	// contextual messages を別行でインデント付きで出力
-	if len(ce.ctxMsgs) > 0 {
-		fmt.Fprintln(h.writer, "  context:")
-		for _, ctxMsg := range ce.ctxMsgs {
-			fmt.Fprintf(h.writer, "    %-30s %s:%d\n",
-				ctxMsg.Message, ctxMsg.File, ctxMsg.Line,
-			)
-		}
-	}
-
 	// stacktrace を別行でインデント付きで出力
 	if ce != nil && ce.stack != nil {
 		fmt.Fprintln(h.writer, "  stacktrace:")
-		for _, f := range ce.stack.Frames {
+		for _, f := range ce.stack {
 			if !f.InApp {
 				continue
 			}
@@ -88,6 +78,19 @@ func (h *PrettyTextHandler) Handle(ctx context.Context, r slog.Record) error {
 			)
 		}
 	}
+
+	// messages を別行でインデント付きで出力
+	if len(ce.messages) > 0 {
+		fmt.Fprintln(h.writer, "  context:")
+		for _, ctxMsg := range ce.messages {
+			fmt.Fprintf(h.writer, "    %-30s %s:%d\n",
+				ctxMsg.Message, ctxMsg.Filename, ctxMsg.Lineno,
+			)
+		}
+	}
+
+	// checkpoints
+	// TODO
 
 	return nil
 }

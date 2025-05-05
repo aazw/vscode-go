@@ -16,7 +16,7 @@ func TestCustomError_Basic(t *testing.T) {
 	// cause に標準 errors を使ってみる
 	cause := stdErrors.New("root cause")
 	err := ErrUnknown.New(
-		WithContextualMessage("ctx msg"),
+		WithMessage("ctx msg"),
 		WithCause(cause),
 	)
 
@@ -47,17 +47,17 @@ func TestCustomError_Basic(t *testing.T) {
 		t.Errorf("Detail() = %q; want %q", got, "an unknown error occurred")
 	}
 
-	// 4) Contexts() のテスト
-	cxtMsgs := ce.CtxMsgs()
-	if len(cxtMsgs) != 1 {
-		t.Errorf("Contexts() len = %d; want %d", len(cxtMsgs), 1)
+	// 4) Messages() のテスト
+	messages := ce.Messages()
+	if len(messages) != 1 {
+		t.Errorf("Messages() len = %d; want %d", len(messages), 1)
 	} else {
 		wantMsg := "ctx msg"
-		if got := cxtMsgs[0].Message; got != wantMsg {
-			t.Errorf("Contexts()[0].Msg = %q; want %q", got, wantMsg)
+		if got := messages[0].Message; got != wantMsg {
+			t.Errorf("Messages()[0].Msg = %q; want %q", got, wantMsg)
 		}
-		if cxtMsgs[0].File == "" || cxtMsgs[0].Line <= 0 {
-			t.Errorf("Contexts()[0] = %+v; want non-empty File and positive Line", cxtMsgs[0])
+		if messages[0].Filename == "" || messages[0].Lineno <= 0 {
+			t.Errorf("Messages()[0] = %+v; want non-empty File and positive Line", messages[0])
 		}
 	}
 
@@ -78,7 +78,7 @@ func TestCustomError_JSONLogging(t *testing.T) {
 	logger := slog.New(handler)
 
 	err := ErrUnknown.New(
-		WithContextualMessage("ctx msg"),
+		WithMessage("ctx msg"),
 		WithCause(crErrors.New("root cause")),
 	)
 	logger.Error("operation failed", "err", err)
@@ -103,17 +103,17 @@ func TestCustomError_JSONLogging(t *testing.T) {
 		t.Errorf(`json err.detail = %q; want "an unknown error occurred"`, got)
 	}
 
-	// context は配列、最初の要素に message があること
-	ctxRaw, ok := obj["context"].([]any)
+	// messages は配列、最初の要素に message があること
+	ctxRaw, ok := obj["messages"].([]any)
 	if !ok || len(ctxRaw) != 1 {
-		t.Fatalf("json err.context type = %T, len=%d; want []any len 1", ctxRaw, len(ctxRaw))
+		t.Fatalf("json err.messages type = %T, len=%d; want []any len 1", ctxRaw, len(ctxRaw))
 	}
 	ctx0, ok := ctxRaw[0].(map[string]any)
 	if !ok {
-		t.Fatalf("json err.context[0] type = %T; want map[string]any", ctxRaw[0])
+		t.Fatalf("json err.messages[0] type = %T; want map[string]any", ctxRaw[0])
 	}
 	if msg, _ := ctx0["message"].(string); msg != "ctx msg" {
-		t.Errorf(`json err.context[0].message = %q; want "ctx msg"`, msg)
+		t.Errorf(`json err.messages[0].message = %q; want "ctx msg"`, msg)
 	}
 
 	// cause を検証
@@ -126,30 +126,22 @@ func TestCustomError_JSONLogging(t *testing.T) {
 	if !exists {
 		t.Error("json err.stacktrace missing")
 	}
-	stObj, ok := stRaw.(map[string]any)
-	if !ok {
-		t.Fatalf("json err.stacktrace type = %T; want object", stRaw)
-	}
-	framesRaw, exists := stObj["frames"]
-	if !exists {
-		t.Error("json err.stacktrace.frames missing")
-	}
-	framesArr, ok := framesRaw.([]any)
+	framesArr, ok := stRaw.([]any)
 	if !ok || len(framesArr) == 0 {
-		t.Errorf("json err.stacktrace.frames = %v; want non-empty array", framesRaw)
+		t.Errorf("json err.stacktrace.frames = %v; want non-empty array", stRaw)
 	}
 }
 
-// Test WithContextualMessagef produces a formatted context message.
-func TestCustomError_WithContextualMessagef(t *testing.T) {
+// Test WithMessagef produces a formatted message.
+func TestCustomError_WithMessagef(t *testing.T) {
 	err := ErrUnknown.New(
-		WithContextualMessagef("value=%d", 42),
+		WithMessagef("value=%d", 42),
 	)
 	ce := &CustomError{}
 	if !stdErrors.As(err, &ce) {
 		t.Fatal("could not cast to *CustomError")
 	}
-	msgs := ce.CtxMsgs()
+	msgs := ce.Messages()
 	if len(msgs) != 1 {
 		t.Fatalf("CtxMsgs len = %d; want 1", len(msgs))
 	}
@@ -159,17 +151,17 @@ func TestCustomError_WithContextualMessagef(t *testing.T) {
 	}
 }
 
-// Test multiple WithContextualMessage calls accumulate contexts in order.
+// Test multiple WithMessage calls accumulate messages in order.
 func TestCustomError_MultipleContexts(t *testing.T) {
 	err := ErrUnknown.New(
-		WithContextualMessage("first"),
-		WithContextualMessage("second"),
+		WithMessage("first"),
+		WithMessage("second"),
 	)
 	ce := &CustomError{}
 	if !stdErrors.As(err, &ce) {
 		t.Fatal("could not cast to *CustomError")
 	}
-	msgs := ce.CtxMsgs()
+	msgs := ce.Messages()
 	if len(msgs) != 2 {
 		t.Fatalf("CtxMsgs len = %d; want 2", len(msgs))
 	}
@@ -200,8 +192,8 @@ func TestCustomError_NoOptions(t *testing.T) {
 	if !stdErrors.As(err, &ce) {
 		t.Fatal("could not cast to *CustomError")
 	}
-	if len(ce.CtxMsgs()) != 0 {
-		t.Errorf("CtxMsgs len = %d; want 0", len(ce.CtxMsgs()))
+	if len(ce.Messages()) != 0 {
+		t.Errorf("messages len = %d; want 0", len(ce.Messages()))
 	}
 }
 
