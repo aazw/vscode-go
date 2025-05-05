@@ -1,0 +1,5 @@
+# ~/.cobra.yaml など
+author: "Taro Yamada <taro@example.com>"
+projectbase: "github.com/taro/"
+license: "mit"
+useViper: true
