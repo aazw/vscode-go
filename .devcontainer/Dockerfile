@@ -1,5 +1,19 @@
 # グローバルスコープ (最初のFROMより前に書かれたARGのこと)
 ARG GOLANG_VERSION=1.24
+ARG JQ_VERSION=1.7.1
+ARG DOCKERFMT_VERSION=latest
+
+# ##############################
+# builder images
+# ##############################
+
+# jq image
+# https://github.com/jqlang/jq
+FROM ghcr.io/jqlang/jq:${JQ_VERSION} AS jq-builder
+
+# ##############################
+# main image
+# ##############################
 
 # https://mcr.microsoft.com/v2/vscode/devcontainers/go/tags/list
 FROM mcr.microsoft.com/devcontainers/go:${GOLANG_VERSION}
@@ -28,8 +42,9 @@ RUN apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plug
 
 # dockerfmt
 # https://github.com/reteps/dockerfmt
-RUN go install github.com/reteps/dockerfmt@latest
+ARG DOCKERFMT_VERSION
+RUN go install github.com/reteps/dockerfmt@${DOCKERFMT_VERSION}
 
 # jq (latest)
 # https://github.com/jqlang/jq
-COPY --from=ghcr.io/jqlang/jq:1.7.1 /jq /usr/local/bin/
+COPY --from=jq-builder /jq /usr/local/bin/
