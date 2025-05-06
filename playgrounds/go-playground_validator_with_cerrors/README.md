@@ -50,12 +50,12 @@ Key: '' Error:Field validation for '' failed on the 'email' tag
 
 ```json
 {
-  "time": "2025-05-06T09:44:05.443014635Z",
+  "time": "2025-05-06T12:46:45.734716539Z",
   "level": "ERROR",
   "source": {
     "function": "main.validateStruct",
     "file": "/workspaces/vscode-go/playgrounds/go-playground_validator_with_cerrors/main.go",
-    "line": 130
+    "line": 133
   },
   "msg": "error message",
   "err": {
@@ -68,7 +68,7 @@ Key: '' Error:Field validation for '' failed on the 'email' tag
         "module": "main",
         "filename": "/workspaces/vscode-go/playgrounds/go-playground_validator_with_cerrors/main.go",
         "abs_path": "/workspaces/vscode-go/playgrounds/go-playground_validator_with_cerrors/main.go",
-        "lineno": 122,
+        "lineno": 125,
         "in_app": true
       },
       {
@@ -103,7 +103,7 @@ Key: '' Error:Field validation for '' failed on the 'email' tag
         "module": "main",
         "filename": "/workspaces/vscode-go/playgrounds/go-playground_validator_with_cerrors/main.go",
         "abs_path": "/workspaces/vscode-go/playgrounds/go-playground_validator_with_cerrors/main.go",
-        "lineno": 122,
+        "lineno": 125,
         "in_app": false,
         "message": "age must be at most 130, but age is 135"
       },
@@ -112,7 +112,7 @@ Key: '' Error:Field validation for '' failed on the 'email' tag
         "module": "main",
         "filename": "/workspaces/vscode-go/playgrounds/go-playground_validator_with_cerrors/main.go",
         "abs_path": "/workspaces/vscode-go/playgrounds/go-playground_validator_with_cerrors/main.go",
-        "lineno": 122,
+        "lineno": 125,
         "in_app": false,
         "message": "favorite_color must be a valid color (hex, rgb[a], hsl[a]), but favorite_color is '#000-'"
       },
@@ -121,9 +121,9 @@ Key: '' Error:Field validation for '' failed on the 'email' tag
         "module": "main",
         "filename": "/workspaces/vscode-go/playgrounds/go-playground_validator_with_cerrors/main.go",
         "abs_path": "/workspaces/vscode-go/playgrounds/go-playground_validator_with_cerrors/main.go",
-        "lineno": 122,
+        "lineno": 125,
         "in_app": false,
-        "message": "addresses[0].city must set, but addresses[0].city is ''"
+        "message": "addresses[0].city must be set, but addresses[0].city is ''"
       }
     ]
   }
