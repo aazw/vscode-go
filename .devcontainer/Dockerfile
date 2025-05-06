@@ -2,6 +2,7 @@
 ARG GOLANG_VERSION=1.24
 ARG JQ_VERSION=1.7.1
 ARG DOCKERFMT_VERSION=latest
+ARG GOLANGCI_LINT_VERSION=v2.1.6
 
 # ##############################
 # builder images
@@ -10,6 +11,10 @@ ARG DOCKERFMT_VERSION=latest
 # jq image
 # https://github.com/jqlang/jq
 FROM ghcr.io/jqlang/jq:${JQ_VERSION} AS jq-builder
+
+# golangci-lint
+# https://golangci-lint.run/welcome/install/#local-installation
+FROM golangci/golangci-lint:${GOLANGCI_LINT_VERSION} AS golangci-lint-builder
 
 # ##############################
 # main image
@@ -48,3 +53,6 @@ RUN go install github.com/reteps/dockerfmt@${DOCKERFMT_VERSION}
 # jq (latest)
 # https://github.com/jqlang/jq
 COPY --from=jq-builder /jq /usr/local/bin/
+
+# golangci-lint
+COPY --from=golangci-lint-builder /usr/bin/golangci-lint /usr/local/bin/
