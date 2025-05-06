@@ -55,6 +55,9 @@ func main() {
 	})
 
 	validateStruct()
+
+	fmt.Printf("\n")
+
 	validateVariable()
 }
 
