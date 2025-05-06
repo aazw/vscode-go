@@ -5,4 +5,5 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd ${SCRIPT_DIR}/..
 
 # sync ./playgrounds
+go work use .
 go work use -r ./playgrounds
