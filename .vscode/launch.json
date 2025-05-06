@@ -1,0 +1,64 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    // ───────────────────────────────────────────────────────
+    // playgrounds/*/main.go の実行 (パッケージ名で昇順)
+    // ───────────────────────────────────────────────────────
+    {
+      "name": "Run playgrounds/cobra_and_viper",
+      "type": "go", // Go拡張(golang.go)を使う
+      "request": "launch", // デバッガが新しくプロセスを立ち上げてデバッグモードで実行する. 通常のアプリ起動やテスト実行に使う設定. ↔ attach
+      "mode": "auto", // Go拡張が内部でどうやってプログラムを起動／接続するかを決めるオプション. ワークスペースや program の指定に応じて最適な方法を自動的に選択
+      "program": "${workspaceFolder}/playgrounds/cobra_and_viper"
+    },
+    {
+      "name": "Run playgrounds/custom_error_with_stacktrace",
+      "type": "go", // Go拡張(golang.go)を使う
+      "request": "launch", // デバッガが新しくプロセスを立ち上げてデバッグモードで実行する. 通常のアプリ起動やテスト実行に使う設定. ↔ attach
+      "mode": "auto", // Go拡張が内部でどうやってプログラムを起動／接続するかを決めるオプション. ワークスペースや program の指定に応じて最適な方法を自動的に選択
+      "program": "${workspaceFolder}/playgrounds/custom_error_with_stacktrace",
+      "args": ["-log-format", "json"]
+    },
+    {
+      "name": "Run playgrounds/errors_cockroachdb",
+      "type": "go", // Go拡張(golang.go)を使う
+      "request": "launch", // デバッガが新しくプロセスを立ち上げてデバッグモードで実行する. 通常のアプリ起動やテスト実行に使う設定. ↔ attach
+      "mode": "auto", // Go拡張が内部でどうやってプログラムを起動／接続するかを決めるオプション. ワークスペースや program の指定に応じて最適な方法を自動的に選択
+      "program": "${workspaceFolder}/playgrounds/errors_cockroachdb"
+    },
+    {
+      "name": "Run playgrounds/errors_stdpkg",
+      "type": "go", // Go拡張(golang.go)を使う
+      "request": "launch", // デバッガが新しくプロセスを立ち上げてデバッグモードで実行する. 通常のアプリ起動やテスト実行に使う設定. ↔ attach
+      "mode": "auto", // Go拡張が内部でどうやってプログラムを起動／接続するかを決めるオプション. ワークスペースや program の指定に応じて最適な方法を自動的に選択
+      "program": "${workspaceFolder}/playgrounds/errors_stdpkg"
+    },
+    {
+      "name": "Run playgrounds/validator_with_cerrors",
+      "type": "go", // Go拡張(golang.go)を使う
+      "request": "launch", // デバッガが新しくプロセスを立ち上げてデバッグモードで実行する. 通常のアプリ起動やテスト実行に使う設定. ↔ attach
+      "mode": "auto", // Go拡張が内部でどうやってプログラムを起動／接続するかを決めるオプション. ワークスペースや program の指定に応じて最適な方法を自動的に選択
+      "program": "${workspaceFolder}/playgrounds/go-playground_validator_with_cerrors"
+    },
+
+    // ───────────────────────────────────────────────────────
+    // 単体テスト (パッケージ化された部分のみ) (パッケージ名で昇順)
+    // ───────────────────────────────────────────────────────
+    {
+      "name": "Test playgrounds/custom_error_with_stacktrace/cerrors",
+      "type": "go",
+      "request": "launch",
+      "mode": "test",
+      "program": "${workspaceFolder}/playgrounds/custom_error_with_stacktrace/cerrors",
+      "args": ["-test.v"]
+    },
+    {
+      "name": "Test playgrounds/go-playground_validator_with_cerrors/validatorx",
+      "type": "go",
+      "request": "launch",
+      "mode": "test",
+      "program": "${workspaceFolder}/playgrounds/go-playground_validator_with_cerrors/validatorx",
+      "args": ["-test.v"]
+    }
+  ]
+}
