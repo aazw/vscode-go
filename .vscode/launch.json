@@ -35,7 +35,7 @@
       "program": "${workspaceFolder}/playgrounds/errors_stdpkg"
     },
     {
-      "name": "Run playgrounds/validator_with_cerrors",
+      "name": "Run playgrounds/go-playground_validator_with_cerrors",
       "type": "go", // Go拡張(golang.go)を使う
       "request": "launch", // デバッガが新しくプロセスを立ち上げてデバッグモードで実行する. 通常のアプリ起動やテスト実行に使う設定. ↔ attach
       "mode": "auto", // Go拡張が内部でどうやってプログラムを起動／接続するかを決めるオプション. ワークスペースや program の指定に応じて最適な方法を自動的に選択
