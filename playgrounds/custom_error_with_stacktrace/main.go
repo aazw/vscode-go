@@ -45,13 +45,16 @@ func func001() error {
 }
 
 func func002() error {
+	//nolint:staticcheck // SA4023: デモ用にあえて残す
 	err := func003()
+	// nolint:staticcheck // SA4023: デモ用にあえて残す
 	if err != nil {
 		return cerrors.AppendMessage(err, "huge")
 	}
 	return nil
 }
 
+//nolint:staticcheck // SA4023: デモ用にあえて残す
 func func003() error {
 	return cerrors.ErrUnknown.New(
 		cerrors.WithMessage("hello world"),
