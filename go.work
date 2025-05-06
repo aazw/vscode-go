@@ -1,0 +1,9 @@
+go 1.24.2
+
+use (
+	./playgrounds/cobra_and_viper
+	./playgrounds/custom_error_with_stacktrace
+	./playgrounds/errors_cockroachdb
+	./playgrounds/errors_stdpkg
+	./playgrounds/go-playground_validator_with_cerrors
+)
