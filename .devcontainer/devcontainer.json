@@ -6,6 +6,7 @@
   "customizations": {
     "vscode": {
       "extensions": [
+        "ms-azuretools.vscode-containers",
         "ms-azuretools.vscode-docker",
         "esbenp.prettier-vscode",
         "emeraldwalk.RunOnSave",
