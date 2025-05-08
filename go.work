@@ -6,6 +6,7 @@ use (
 	./playgrounds/custom_error_with_stacktrace
 	./playgrounds/errors_cockroachdb
 	./playgrounds/errors_stdpkg
+	./playgrounds/generate_id
 	./playgrounds/gin_graceful_shutdown
 	./playgrounds/go-playground_validator_with_cerrors
 	./playgrounds/sqlc_with_golang_migrate
