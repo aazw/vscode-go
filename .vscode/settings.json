@@ -11,6 +11,10 @@
     "editor.defaultFormatter": "golang.go",
     "editor.formatOnSave": true
   },
+  "[dockercompose]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
   "emeraldwalk.runonsave": {
     "commands": [
       {
