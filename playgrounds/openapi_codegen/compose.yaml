@@ -1,0 +1,5 @@
+services:
+  openapi-generator-online:
+    image: openapitools/openapi-generator-online
+    ports:
+      - 8888:8080

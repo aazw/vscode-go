@@ -10,5 +10,6 @@ use (
 	./playgrounds/gin_graceful_shutdown
 	./playgrounds/go-playground_validator_with_cerrors
 	./playgrounds/go_generate
+	./playgrounds/openapi_codegen
 	./playgrounds/sqlc_with_golang_migrate
 )
