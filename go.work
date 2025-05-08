@@ -9,5 +9,6 @@ use (
 	./playgrounds/generate_id
 	./playgrounds/gin_graceful_shutdown
 	./playgrounds/go-playground_validator_with_cerrors
+	./playgrounds/go_generate
 	./playgrounds/sqlc_with_golang_migrate
 )
