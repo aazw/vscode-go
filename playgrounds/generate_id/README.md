@@ -1,26 +1,33 @@
 # playgrounds/generate_id
 
+## 外部リンク
+
+* UUID  
+  https://ja.wikipedia.org/wiki/UUID
+* Universally Unique IDentifiers (UUIDs)  
+  https://datatracker.ietf.org/doc/html/rfc9562
+
 ## 比較対象
 
-* **github.com/gofrs/uuid**
+* [**github.com/gofrs/uuid**](https://github.com/gofrs/uuid)
   * RFC-4122 準拠の UUID を生成 (v1, v3, v4, v5, v6, v7)
   * v6/v7 は k-sortable (時系列ソート向き)
   * v1 はタイムスタンプ＋MAC、v3/v5 はネームスペース＋ハッシュ、v4 は完全ランダム
   * シンプルかつ標準的な API、企業利用にも安心なメンテナンス状況
 
-* **github.com/google/uuid**
+* [**github.com/google/uuid**](https://github.com/google/uuid)
   * Google 提供の RFC-4122 準拠実装 (v1, v2, v3, v4, v5, v6, v7)
   * v2 (DCE Security UUID)生成 API あり (POSIX UID/GID 埋め込み)
   * v6/v7 は k-sortable、v3/v5 は MD5/SHA-1 ハッシュ
   * Go 標準ライクな設計、依存少なく幅広く利用される
 
-* **github.com/rs/xid**
+* [**github.com/rs/xid**](https://github.com/rs/xid)
   * 12 バイト固定長の ID (UInt32 タイムスタンプ + ５バイトマシン＋３バイトプロセス＋３バイトカウンタ)
   * URL セーフな Base32 エンコード、文字列長は 20 文字程度
   * ほぼ一意かつ高速生成 (数百万／秒レベル)
   * ULID よりもさらに軽量、小規模サービスやログ ID に最適
 
-* **github.com/oklog/ulid**
+* [**github.com/oklog/ulid**](https://github.com/oklog/ulid)
   * 128 ビット (48 ビットタイムスタンプ + 80 ビットランダム)を Crockford’s Base32 で 26 文字にエンコード
     * 26文字になるのはULIDの仕様
   * 時系列ソート可能 (Lexicographically sortable)
