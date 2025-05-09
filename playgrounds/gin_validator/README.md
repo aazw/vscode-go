@@ -4,7 +4,7 @@
 
 ### 1. Ginのバリデーターのタグは？
 
-Ginは github.com/go-playground/validator を内部的に利用しているそう.
+Ginは [github.com/go-playground/validator](https://github.com/go-playground/validator) を内部的に利用しているそう.
 
 * 直接 github.com/go-playground/validator を使う場合は `validate` タグを利用
 * Ginから github.com/go-playground/validator を使う場合は、 `binding` タグを利用
@@ -221,20 +221,20 @@ ok      command-line-arguments  0.008s
 | BindJSON       | BindJSON内で`400`に設定<br/>変更不可 | BindJSON内で`text/plain`に設定<br/>変更不可 | 未設定           |
 | ShouldBindJSON | 未設定                               | 未設定                                      | 未設定           |
 
-* /users/bind_json_by_binding_tag_with_json_resp
+* `/users/bind_json_by_binding_tag_with_json_resp`
     * JSON型を返しているのに、 `Content-Type`が`text/plain`
         * → BindJSONではレスポンスヘッダの上書きはできないことを意味する
-* /users/bind_json_by_binding_tag_without_resp
+* `/users/bind_json_by_binding_tag_without_resp`
     * デフォルトではレスポンスボディに値は入っていないことを意味する
-* bind_json_by_validate_tag_with_json_resp  
-  bind_json_by_validate_tag_with_text_resp  
-  bind_json_by_validate_tag_without_resp
+* `/users/bind_json_by_validate_tag_with_json_resp`  
+  `/users/bind_json_by_validate_tag_with_text_resp`  
+  `/users/bind_json_by_validate_tag_without_resp`
     * go-playground/validatorのデフォルトのタグの`validate`タグは効かないことを意味する
     * ginはgo-playground/validatorのタグを変更している
         * → `binding`
-* should_bind_json_by_binding_tag_with_json_resp
+* `/users/should_bind_json_by_binding_tag_with_json_resp`
     * ShouldBindJSONではレスポンスヘッダの上書きができることを意味する
-* should_bind_json_by_binding_tag_without_resp
+* `/users/should_bind_json_by_binding_tag_without_resp`
     * 200を返す
         * 何もしなければステータスコードのデフォルト値の200を返す
         * ShouldBindJSONはBindJSONと違い、ステータスコードも設定していないことを意味する
