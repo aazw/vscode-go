@@ -8,6 +8,7 @@ use (
 	./playgrounds/errors_stdpkg
 	./playgrounds/generate_id
 	./playgrounds/gin_graceful_shutdown
+	./playgrounds/gin_validator
 	./playgrounds/go-playground_validator_with_cerrors
 	./playgrounds/go_generate
 	./playgrounds/openapi_codegen
