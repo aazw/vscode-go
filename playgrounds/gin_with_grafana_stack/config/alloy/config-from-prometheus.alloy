@@ -1,0 +1,30 @@
+prometheus.scrape "prometheus" {
+	targets = [{
+		__address__ = "localhost:9090",
+		app         = "prometheus",
+	}]
+	forward_to      = [prometheus.remote_write.default.receiver]
+	job_name        = "prometheus"
+	scrape_interval = "15s"
+}
+
+prometheus.scrape "myapp" {
+	targets = [{
+		__address__ = "host.docker.internal:8080",
+		app         = "myapp",
+	}]
+	forward_to      = [prometheus.remote_write.default.receiver]
+	job_name        = "myapp"
+	scrape_interval = "15s"
+	metrics_path    = "/metrics/prometheus"
+}
+
+prometheus.remote_write "default" {
+	endpoint {
+		url = "http://mimir:9009/api/v1/push"
+
+		queue_config { }
+
+		metadata_config { }
+	}
+}

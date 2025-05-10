@@ -5,13 +5,13 @@ services:
     image: grafana/mimir:2.16.0
     ports:
       - "9009:9009"
-    volumes:
-      - ${LOCAL_WORKSPACE_FOLDER}/playgrounds/gin_with_grafana_stack/config/mimir/mimir.yaml:/etc/mimir/mimir.yaml
     command:
       - -target=all
       - -server.http-listen-address=0.0.0.0
       - -server.grpc-listen-address=0.0.0.0
       - --config.file=/etc/mimir/mimir.yaml
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER}/playgrounds/gin_with_grafana_stack/config/mimir/mimir.yaml:/etc/mimir/mimir.yaml
 
   # https://hub.docker.com/r/grafana/grafana
   # https://github.com/grafana/grafana
@@ -44,3 +44,37 @@ services:
       - ${LOCAL_WORKSPACE_FOLDER}/playgrounds/gin_with_grafana_stack/config/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml
     extra_hosts:
       - host.docker.internal:host-gateway
+
+  # https://hub.docker.com/r/grafana/alloy
+  # https://github.com/grafana/alloy
+  alloy:
+    image: grafana/alloy:v1.8.3
+    ports:
+      - "12345:12345"
+    command:
+      - run
+      - --server.http.listen-addr=0.0.0.0:12345
+      - --storage.path=/var/lib/alloy/data
+      # - /etc/alloy/config.alloy
+      - /etc/alloy/config-from-prometheus.alloy
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER}/playgrounds/gin_with_grafana_stack/config/alloy:/etc/alloy
+    extra_hosts:
+      - host.docker.internal:host-gateway
+
+  # このサービスは "run-only" プロファイル有効時(明示的に--profile run-only upしたとき)のみ、up で起動対象に含まれる
+  # 通常のdocker compose upでは無視される → 事実上、docker compose run alloy-convert専用のserviceにできる
+  # ターゲットサービスを明示的に指定した場合、該当サービスの profiles を自動で有効化して実行するため上記runで実行できる
+  alloy-convert:
+    image: grafana/alloy:v1.8.3
+    command:
+      - convert
+      - --source-format=prometheus
+      - --output=/alloy/alloy/config-from-prometheus.alloy
+      - /alloy/prometheus/prometheus.yaml
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER}/playgrounds/gin_with_grafana_stack/config/prometheus:/alloy/prometheus
+      - ${LOCAL_WORKSPACE_FOLDER}/playgrounds/gin_with_grafana_stack/config/alloy:/alloy/alloy
+    profiles:
+      - run-only
+

@@ -76,6 +76,20 @@
 | Prometheus    | TSDB＋スクレイプ＋ルール評価エンジン            | メトリクスの短期保存・アラート           |
 | Grafana Alloy | Telemetry Collector＋Prometheus互換パイプライン | 各種データの収集・変換・転送パイプライン |
 
+#### AlloyでPrometheusの設定ファイルをAlloy向けに変換できる
+
+https://grafana.com/docs/alloy/latest/set-up/migrate/from-prometheus/#convert-a-prometheus-configuration
+
+```bash
+alloy convert --source-format=prometheus --bypass-errors --output=<OUTPUT_CONFIG_PATH> <INPUT_CONFIG_PATH>
+```
+
+`compose.yaml`にて`alloy-convert`として定義済. 以下でprometheus.yamlから変換できる.
+
+```bash
+docker compose run alloy-convert
+```
+
 ### Grafana (Jsonnet/Grafonnet)
 
 * https://github.com/grafana/grafonnet
