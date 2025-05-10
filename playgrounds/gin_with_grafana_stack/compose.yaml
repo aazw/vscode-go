@@ -1,0 +1,46 @@
+services:
+  # https://hub.docker.com/r/grafana/mimir
+  # https://github.com/grafana/mimir
+  mimir:
+    image: grafana/mimir:2.16.0
+    ports:
+      - "9009:9009"
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER}/playgrounds/gin_with_grafana_stack/config/mimir/mimir.yaml:/etc/mimir/mimir.yaml
+    command:
+      - -target=all
+      - -server.http-listen-address=0.0.0.0
+      - -server.grpc-listen-address=0.0.0.0
+      - --config.file=/etc/mimir/mimir.yaml
+
+  # https://hub.docker.com/r/grafana/grafana
+  # https://github.com/grafana/grafana
+  grafana:
+    image: grafana/grafana:12.0.0
+    ports:
+      - "3000:3000"
+    environment:
+      # 匿名アクセスを有効化
+      GF_AUTH_ANONYMOUS_ENABLED: true
+      # 匿名ユーザーが所属する組織名（デフォルトは "Main Org."）
+      GF_AUTH_ANONYMOUS_ORG_NAME: "Main Org."
+      # 匿名ユーザーに付与するロール（Admin, Editor, Viewer のいずれか）
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
+      # ログインフォームを非表示にする
+      GF_AUTH_DISABLE_LOGIN_FORM: true
+      # Basic 認証を無効化
+      GF_AUTH_BASIC_ENABLED: false
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER}/playgrounds/gin_with_grafana_stack/config/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ${LOCAL_WORKSPACE_FOLDER}/playgrounds/gin_with_grafana_stack/config/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+
+  # https://hub.docker.com/r/prom/prometheus
+  # https://github.com/prometheus/prometheus
+  prometheus:
+    image: prom/prometheus:v3.3.1
+    ports:
+      - "9090:9090"
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER}/playgrounds/gin_with_grafana_stack/config/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml
+    extra_hosts:
+      - host.docker.internal:host-gateway
