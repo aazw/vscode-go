@@ -103,6 +103,7 @@ docker compose run alloy-convert
 
 ### Loki
 
+* Like Prometheus, but for logs
 * Loki
     * https://grafana.com/oss/loki/
     * https://grafana.com/docs/loki/latest/
@@ -112,7 +113,15 @@ docker compose run alloy-convert
     * https://grafana.com/docs/loki/latest/send-data/promtail/
     * https://hub.docker.com/r/grafana/promtail
     * Loki用エージェント
+* https://grafana.com/docs/loki/latest/setup/install/docker/
+* Deprecated fields in loki-local-config causing unmarshal error  
+  https://github.com/grafana/loki/issues/16990
 
+```bash
+docker compose up loki
+
+docker compose up promtail
+```
 
 ### Pyroscope
 
