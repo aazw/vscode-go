@@ -1,7 +1,9 @@
+# https://grafana.com/docs/grafana/latest/administration/provisioning/
+# https://grafana.com/docs/grafana/latest/datasources/prometheus/
 apiVersion: 1
 datasources:
   - name: Mimir
-    uid: "mimir"
+    uid: mimir
     type: prometheus
     access: proxy
     url: http://mimir:9009/prometheus
