@@ -2,7 +2,13 @@
 
 ## 概要
 
+* Metrics
+* Logging
+* Tracing
+* Profiling
+
 ```text
+# Metrics
 +---------+     +------------+     +-------+     +---------+
 |         |<----|   Alloy    |---->|       |     |         |
 |         |     +------------+     |       |     |         |
@@ -10,7 +16,41 @@
 |         |     +------------+     |       |     |         |
 |         |<----| Prometheus |---->|       |     |         |
 +---------+     +------------+     +-------+     +---------+
+
+# Logging
++---------+     +--------+                  +----------+     +------+
+|         |     |        |     +---|\       |          |     |      |
+|         |     |        |     |   |_\      |          |     |      |
+| Gin App |---->| Docker |---->| File |<----| Promtail |---->| Loki |
+|         |     | Engine |     |      |     |          |     |      |
+|         |     |        |     +------+     |          |     |      |
++---------+     +--------+                  +----------+     +------+
+
+# Tracing
++---------+ 
+|         | 
+|         | 
+| Gin App |-
+|         | 
+|         | 
++---------+ 
+
+# Profiling
++---------+ 
+|         | 
+|         | 
+| Gin App |-
+|         | 
+|         | 
++---------+ 
 ```
+
+
+
+### Grafana (Jsonnet/Grafonnet)
+
+* https://github.com/grafana/grafonnet
+* https://github.com/grafana/grafonnet-lib ... archived
 
 ### Grafana Mimir
 
@@ -90,19 +130,9 @@ alloy convert --source-format=prometheus --bypass-errors --output=<OUTPUT_CONFIG
 docker compose run alloy-convert
 ```
 
-### Grafana (Jsonnet/Grafonnet)
+### Grafana Loki
 
-* https://github.com/grafana/grafonnet
-* https://github.com/grafana/grafonnet-lib ... archived
-* 
-
-### Grafana Tempo
-
-* https://grafana.com/docs/tempo/latest/
-* https://hub.docker.com/r/grafana/tempo
-
-### Loki
-
+* Logging
 * Like Prometheus, but for logs
 * Loki
     * https://grafana.com/oss/loki/
@@ -116,6 +146,8 @@ docker compose run alloy-convert
 * https://grafana.com/docs/loki/latest/setup/install/docker/
 * Deprecated fields in loki-local-config causing unmarshal error  
   https://github.com/grafana/loki/issues/16990
+* https://grafana.com/docs/loki/latest/configure/
+* https://grafana.com/docs/loki/latest/reference/loki-http-api/
 
 ```bash
 docker compose up loki
@@ -123,8 +155,34 @@ docker compose up loki
 docker compose up promtail
 ```
 
-### Pyroscope
+### Grafana Tempo
 
+* Tracing
+* https://grafana.com/oss/tempo/
+* https://github.com/grafana/tempo
+* https://grafana.com/docs/tempo/latest/
+* https://hub.docker.com/r/grafana/tempo
+* https://grafana.com/docs/grafana/latest/datasources/tempo/configure-tempo-data-source/#provision-the-data-source
+* https://grafana.com/docs/tempo/latest/getting-started/
+* https://github.com/grafana/tempo/tree/main/example/docker-compose
+* https://github.com/grafana/tempo/blob/main/example/docker-compose/local/docker-compose.yaml
+* https://grafana.com/docs/tempo/latest/configuration/manifest/
+* OpenTelemetry
+    * Logs、Metrics、Traces
+    * https://opentelemetry.io
+        * https://opentelemetry.io/docs/languages/go/
+        * https://opentelemetry.io/docs/languages/go/getting-started/
+    * https://github.com/open-telemetry/opentelemetry-go
+        * https://pkg.go.dev/go.opentelemetry.io/
+            * https://pkg.go.dev/go.opentelemetry.io/otel/
+            * https://pkg.go.dev/go.opentelemetry.io/otel/exporters/prometheus
+    * https://github.com/open-telemetry/opentelemetry-go-contrib
+        * https://github.com/open-telemetry/opentelemetry-go-contrib/tree/main/instrumentation/github.com/gin-gonic/gin/otelgin
+            * https://github.com/open-telemetry/opentelemetry-go-contrib/blob/main/instrumentation/github.com/gin-gonic/gin/otelgin/example/server.go
+
+### Grafana Pyroscope
+
+* Profiling
 * https://grafana.com/docs/pyroscope/latest/
 * https://github.com/grafana/pyroscope
 * https://hub.docker.com/r/grafana/pyroscope

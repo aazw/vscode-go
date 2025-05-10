@@ -9,6 +9,7 @@ use (
 	./playgrounds/generate_id
 	./playgrounds/gin_graceful_shutdown
 	./playgrounds/gin_validator
+	./playgrounds/gin_with_grafana_stack
 	./playgrounds/gin_with_valkey
 	./playgrounds/go-playground_validator_with_cerrors
 	./playgrounds/go_generate

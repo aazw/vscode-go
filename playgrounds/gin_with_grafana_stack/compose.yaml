@@ -86,6 +86,24 @@ services:
       - run-only
 
   # ##################################################################
+  # Tracing
+  # ##################################################################
+
+  # https://hub.docker.com/r/grafana/tempo
+  # https://github.com/grafana/tempo
+  tempo:
+    image: grafana/tempo:2.7.2
+    ports:
+      - "3200:3200" # tempo http
+      - "4317:4317" # otlp grpc
+      - "4318:4318" # otlp http
+      - "9095:9095" # tempo grpc
+    command:
+      - -config.file=/etc/tempo/tempo.yaml
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER}/playgrounds/gin_with_grafana_stack/config/tempo:/etc/tempo
+
+  # ##################################################################
   # Log
   # ##################################################################
 
@@ -112,3 +130,4 @@ services:
     volumes:
       - ${LOCAL_WORKSPACE_FOLDER}/playgrounds/gin_with_grafana_stack/config/loki:/etc/loki
       - /var/log:/var/log
+      - /var/run/docker.sock:/var/run/docker.sock:ro
