@@ -18,3 +18,20 @@ scrape_configs:
         labels:
           job: varlogs
           __path__: /var/log/*log
+  - job_name: docker
+    docker_sd_configs:
+      - host: unix:///var/run/docker.sock
+        refresh_interval: 5s
+        # # 必要ならラベルでフィルタ
+        # filters:
+        #   - name: label
+        #     values: ["logging=promtail"]
+    relabel_configs:
+      # コンテナ名を取り出して label に
+      - source_labels: ["__meta_docker_container_name"]
+        regex: "/(.*)"
+        target_label: container
+      # ログファイルパスを動的に設定
+      - source_labels: ["__meta_docker_container_id"]
+        target_label: __path__
+        replacement: /var/lib/docker/containers/$1/$1-json.log
