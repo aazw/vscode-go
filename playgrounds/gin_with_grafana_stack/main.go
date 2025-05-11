@@ -318,6 +318,7 @@ func initTracing() (func() error, error) {
 	if err != nil {
 		return nil, fmt.Errorf("otlptracehttp creation error: %+w", err)
 	}
+
 	tracerProvider := trace.NewTracerProvider(
 		trace.WithBatcher(exp),
 		trace.WithResource(resource.NewWithAttributes(
@@ -325,8 +326,8 @@ func initTracing() (func() error, error) {
 			semconv.ServiceNameKey.String(appName),
 		)),
 	)
-
 	otel.SetTracerProvider(tracerProvider)
+
 	otel.SetTextMapPropagator(
 		propagation.NewCompositeTextMapPropagator(
 			propagation.TraceContext{},
@@ -336,14 +337,16 @@ func initTracing() (func() error, error) {
 
 	return func() error {
 		if err := tracerProvider.Shutdown(ctx); err != nil {
-			return fmt.Errorf("tracer_trovider shutdown error: %+w", err)
+			return fmt.Errorf("tracer_provider shutdown error: %+w", err)
 		}
 		return nil
 	}, nil
 }
 
+// Prometheus
 var httpRequests *prometheus.HistogramVec
 
+// PrometheusによるPull用エンドポイントのための準備
 func initMetrics() error {
 	httpRequests = prometheus.NewHistogramVec(
 		prometheus.HistogramOpts{
@@ -369,7 +372,7 @@ func setupRouter() (*gin.Engine, error) {
 	// router := gin.Default()
 	router := gin.New()
 
-	// Custom logger
+	// Custom logger for Access Log
 	// https://github.com/gin-gonic/gin/blob/v1.10.0/logger.go#L212-L281
 	// https://github.com/gin-gonic/gin/blob/v1.10.0/logger.go#L196-L200
 	// https://github.com/gin-gonic/gin/blob/v1.10.0/logger.go#L60
@@ -400,7 +403,7 @@ func setupRouter() (*gin.Engine, error) {
 			"client_ip", fmt.Sprintf("%15s", param.ClientIP),
 			"method", fmt.Sprintf("%-7s", param.Method),
 			"path", fmt.Sprintf("%#v", param.Path),
-			"error_message", fmt.Sprintf("%s", param.ErrorMessage),
+			"error_message", param.ErrorMessage,
 		)
 		return buf.String()
 	}))
@@ -420,7 +423,7 @@ func setupRouter() (*gin.Engine, error) {
 		httpRequests.WithLabelValues(c.FullPath(), c.Request.Method, status).Observe(duration)
 	})
 
-	// Metrics Endpoint: Prometheus/Alloy
+	// Metrics Endpoint: (Prometheus)
 	router.GET("/metrics/prometheus", gin.WrapH(promhttp.Handler()))
 
 	return router, nil

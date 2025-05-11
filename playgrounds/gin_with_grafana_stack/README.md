@@ -1,6 +1,13 @@
 # playgrounds/gin_with_grafana_stack
 
-## 概要
+## main.go
+
+* Metricsに対応するためPrometheusでOpemMetricsエンドポイントを実装する
+* Logsに対応するためログには構造化したもの(JSON)を出力する
+* Tracingに対応するためOpenTelemetry ProtocolのTracingに対応する
+* Profilingに対応するためPyroscopeに対応する
+
+## Grafana Stacks
 
 * 4 Stacks
     * Metrics
@@ -112,12 +119,29 @@ OTLP: OpenTelemetry Protocol
 * https://grafana.com/docs/mimir/latest/
     * https://grafana.com/docs/mimir/latest/get-started/
     * https://grafana.com/docs/mimir/latest/configure/configuration-parameters/
-* OpenMetrics対応方法
+* OpenMetrics対応方法 (Prometheus Exporter)
     * https://github.com/prometheus/client_golang
         * github.com/prometheus/client_golang/prometheus
         * github.com/prometheus/client_golang/prometheus/promhttp
     * https://github.com/open-telemetry/opentelemetry-go
         * https://opentelemetry.io/docs/languages/go/getting-started/
+        * https://pkg.go.dev/go.opentelemetry.io/otel/exporters/metric/prometheus
+            * 旧版
+            * go getで依存するパッケージが取れないエラーになる
+        * https://pkg.go.dev/go.opentelemetry.io/otel/exporters/prometheus
+            * 新版
+            * https://opentelemetry.io/docs/languages/go/exporters/#prometheus-experimental
+            * https://github.com/open-telemetry/opentelemetry-go-contrib/blob/main/examples/prometheus/main.go
+            * まだExperimental状態
+            * メトリクス計測方法はある
+            * http.Handlerを実装していないので、Prometheusのエンドポイントを提供する機能はない
+            * サンプル実装も、Exporter部分にはPrometheusの実装を使っている
+                * github.com/prometheus/client_golang/prometheus/promhttp
+    * https://pkg.go.dev/go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetrichttp
+        * こっちはPush型
+        * このOTLP HTTPはPush型. PrometheusのPull型とは異なる
+        *  アプリケーション内でメトリクスを収集し、指定したCollectorのHTTPエンドポイントへ定期的に送信(push)する
+        * デフォルトだと :4318/v1/metrics で、AlloyかGrafana Agent Flowがこれを受け取れる
 * https://community.zenduty.com/t/how-to-properly-configure-mimir-data-source-in-grafana/976/3
 * Prometheus
     * https://prometheus.io/
