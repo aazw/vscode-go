@@ -104,6 +104,17 @@ services:
       - ${LOCAL_WORKSPACE_FOLDER}/playgrounds/gin_with_grafana_stack/config/tempo:/etc/tempo
 
   # ##################################################################
+  # Profiling
+  # ##################################################################
+
+  # https://hub.docker.com/r/grafana/pyroscope
+  # https://github.com/grafana/pyroscope
+  pyroscope:
+    image: grafana/pyroscope:1.13.2
+    ports:
+      - "4040:4040"
+
+  # ##################################################################
   # Log
   # ##################################################################
 

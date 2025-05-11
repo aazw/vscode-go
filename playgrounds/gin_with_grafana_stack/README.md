@@ -158,15 +158,17 @@ docker compose up promtail
 ### Grafana Tempo
 
 * Tracing
-* https://grafana.com/oss/tempo/
-* https://github.com/grafana/tempo
-* https://grafana.com/docs/tempo/latest/
 * https://hub.docker.com/r/grafana/tempo
-* https://grafana.com/docs/grafana/latest/datasources/tempo/configure-tempo-data-source/#provision-the-data-source
-* https://grafana.com/docs/tempo/latest/getting-started/
-* https://github.com/grafana/tempo/tree/main/example/docker-compose
-* https://github.com/grafana/tempo/blob/main/example/docker-compose/local/docker-compose.yaml
-* https://grafana.com/docs/tempo/latest/configuration/manifest/
+* https://github.com/grafana/tempo
+    * https://github.com/grafana/tempo/tree/main/example/docker-compose
+    * https://github.com/grafana/tempo/blob/main/example/docker-compose/local/docker-compose.yaml
+* https://grafana.com/oss/tempo/
+    * https://grafana.com/docs/tempo/latest/
+    * https://grafana.com/docs/tempo/latest/getting-started/
+    * https://grafana.com/docs/tempo/latest/configuration/
+    * https://grafana.com/docs/tempo/latest/configuration/manifest/
+    * https://grafana.com/docs/tempo/latest/setup/linux/#create-a-tempo-configuration-file
+    * https://grafana.com/docs/grafana/latest/datasources/tempo/configure-tempo-data-source/#provision-the-data-source
 * OpenTelemetry
     * Logs、Metrics、Traces
     * https://opentelemetry.io
@@ -176,6 +178,7 @@ docker compose up promtail
         * https://pkg.go.dev/go.opentelemetry.io/
             * https://pkg.go.dev/go.opentelemetry.io/otel/
             * https://pkg.go.dev/go.opentelemetry.io/otel/exporters/prometheus
+            * https://pkg.go.dev/go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp#example-package
     * https://github.com/open-telemetry/opentelemetry-go-contrib
         * https://github.com/open-telemetry/opentelemetry-go-contrib/tree/main/instrumentation/github.com/gin-gonic/gin/otelgin
             * https://github.com/open-telemetry/opentelemetry-go-contrib/blob/main/instrumentation/github.com/gin-gonic/gin/otelgin/example/server.go
@@ -183,9 +186,13 @@ docker compose up promtail
 ### Grafana Pyroscope
 
 * Profiling
-* https://grafana.com/docs/pyroscope/latest/
-* https://github.com/grafana/pyroscope
 * https://hub.docker.com/r/grafana/pyroscope
+* https://grafana.com/oss/pyroscope/
+* https://grafana.com/docs/pyroscope/latest/
+    * https://grafana.com/docs/pyroscope/latest/configure-client/language-sdks/go_push/
+* https://github.com/grafana/pyroscope
+    * https://github.com/grafana/pyroscope/tree/next/examples
+        * https://github.com/grafana/pyroscope/tree/next/examples/golang-push
 
 ### その他Grafana Stack
 

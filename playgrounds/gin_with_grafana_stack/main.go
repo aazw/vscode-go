@@ -4,9 +4,14 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"os"
+	"runtime"
 	"time"
 
 	"github.com/gin-gonic/gin"
+
+	// Profiling
+	"github.com/grafana/pyroscope-go"
 
 	// OpenMetrics
 	"github.com/prometheus/client_golang/prometheus"
@@ -24,10 +29,48 @@ import (
 	oteltrace "go.opentelemetry.io/otel/trace"
 )
 
+const (
+	appName = "my-gin-app"
+)
+
 var tracer = otel.Tracer("gin-server")
 
 func main() {
 	gin.SetMode(gin.ReleaseMode)
+
+	// Profiling
+	runtime.SetMutexProfileFraction(5)
+	runtime.SetBlockProfileRate(5)
+
+	pyroscope.Start(pyroscope.Config{
+		ApplicationName: "myapp",
+
+		// replace this with the address of pyroscope server
+		// ServerAddress: "http://pyroscope:4040",
+		ServerAddress: "http://host.docker.internal:4040",
+
+		// you can disable logging by setting this to nil
+		Logger: pyroscope.StandardLogger,
+
+		// you can provide static tags via a map:
+		Tags: map[string]string{"hostname": os.Getenv("HOSTNAME")},
+
+		ProfileTypes: []pyroscope.ProfileType{
+			// these profile types are enabled by default:
+			pyroscope.ProfileCPU,
+			pyroscope.ProfileAllocObjects,
+			pyroscope.ProfileAllocSpace,
+			pyroscope.ProfileInuseObjects,
+			pyroscope.ProfileInuseSpace,
+
+			// these profile types are optional:
+			pyroscope.ProfileGoroutines,
+			pyroscope.ProfileMutexCount,
+			pyroscope.ProfileMutexDuration,
+			pyroscope.ProfileBlockCount,
+			pyroscope.ProfileBlockDuration,
+		},
+	})
 
 	// Tracing
 	// https://pkg.go.dev/go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp#example-package
