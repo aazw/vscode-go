@@ -31,8 +31,8 @@
 |         |  StdOut   |        |     +---|\       |          |   HTTP   |      |   HTTP   |         |
 |         |  /StdErr  |        |     |   |_\      |          |  (3100)  |      |  (3100)  |         |
 | Gin App |---------->| Docker |---->| File |<----| Promtail |--------->| Loki |<---------| Grafana |
-|         |           | Engine |     | *1   |     |          |          |      |          |         |
-|         |           |        |     +------+     |          |          |      |          |         |
+|         |  構造化   | Engine |     | *1   |     |          |          |      |          |         |
+|         |   ログ    |        |     +------+     |          |          |      |          |         |
 +---------+           +--------+                  +----------+          +------+          +---------+
 *1: /var/lib/docker/containers/<コンテナID>/<コンテナID>-json.log
 
@@ -58,8 +58,22 @@ OTLP: OpenTelemetry Protocol
 
 ### Grafana (Grafonnet)
 
+* Grizzly
+    * GrizzlyはGrafanaダッシュボードなどを管理するためのcliツール
+    * GrafanaのDashboards as Code
+     `grr serve` は手元でGrafanaそのものを使ってDashboardを作成する
+    * https://hub.docker.com/r/grafana/grizzly
+    * https://github.com/grafana/grizzly
+    * GrizzlyとGrafonnetで始めるGrafana Dashboards as Code
+      https://dasalog.hatenablog.jp/entry/2024/07/16/100252
 * Grafonnet
     * Jsonnet for Grafana
+    * Grafanaダッシュボードなどを管理するのは、最終的にJSON表現となればよい
+    * Jsonnet
+        * JSONを生成するテンプレート言語
+    * Grafonnet
+        * JsonnetでGrafanaのダッシュボード表現を扱うためのライブラリ
+        * JSONテンプレート言語を使うので、より簡潔な記述を可能とする
     * https://github.com/grafana/grafonnet
     * https://github.com/grafana/grafonnet-lib ... archived
 
@@ -196,6 +210,8 @@ docker compose run alloy-convert
 * https://github.com/grafana/pyroscope
     * https://github.com/grafana/pyroscope/tree/next/examples
         * https://github.com/grafana/pyroscope/tree/next/examples/golang-push
+* https://github.com/grafana/pyroscope-go
+    * https://pkg.go.dev/github.com/grafana/pyroscope-go
 
 ### その他Grafana Stack
 
@@ -253,16 +269,3 @@ docker compose up tempo
 ```bash
 docker compose up pyroscope
 ```
-
-*** 
-
-##
-
-* Grizzly
-    * https://hub.docker.com/r/grafana/grizzly
-    * GrizzlyとGrafonnetで始めるGrafana Dashboards as Code
-      https://dasalog.hatenablog.jp/entry/2024/07/16/100252
-
-* Kist
-  * https://github.com/grafana/Kost
-  * K8s Cost Calculator
