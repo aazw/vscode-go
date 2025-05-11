@@ -8,6 +8,7 @@ ARG SQLC_VERSION=1.29.0
 ARG GOLANG_MIGRATE_VERSION=v4.18.3
 ARG OAPI_CODEGEN_VERSION=v2.4.1
 ARG OGEN_VERSION=latest
+ARG DIVE_VERSION=v0.13.1
 
 # ##############################
 # builder images
@@ -35,6 +36,11 @@ FROM sqlc/sqlc:${SQLC_VERSION} AS sqlc-builder
 # https://github.com/golang-migrate/migrate
 # https://hub.docker.com/r/migrate/migrate
 FROM migrate/migrate:${GOLANG_MIGRATE_VERSION} AS golang-migrate-builder
+
+# dive
+# https://github.com/wagoodman/dive
+# https://hub.docker.com/r/wagoodman/dive
+FROM wagoodman/dive:${DIVE_VERSION} AS dive-builder
 
 # ##############################
 # main image
@@ -113,3 +119,6 @@ RUN yarn global add ibm-openapi-validator
 # redocly-cli
 # https://github.com/Redocly/redocly-cli
 RUN yarn global add @redocly/cli
+
+# dive
+COPY --from=dive-builder /usr/local/bin/dive /usr/local/bin/
