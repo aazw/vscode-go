@@ -29,10 +29,32 @@
 * [playgrounds/gin_graceful_shutdown](./playgrounds/gin_graceful_shutdown)
     * GinでGraceful Shutdownを実装する方法
 
+* [playgrounds/gin_validator](./playgrounds/gin_validator)
+    * go-playground/validator
+    * そのまま使う場合、Gin組み込みのものをGin経由で使う場合
+    * タグの検証
+
+* [playgrounds/gin_with_grafana_stack](./playgrounds/gin_with_grafana_stack)
+    * Grafana Stack
+        * Grafana、Mimir、Prometheus、Alloy、Loki、Promtail、Tempo、Pyroscope
+    * Prometheus Exporter
+    * Gin
+
+* [playgrounds/gin_with_valkey](./playgrounds/gin_with_valkey)
+    * Redis互換のOSS『Valkey』
+    * ginのsession管理にRedis向けのパッケージでValkeyが使えるかの検証
+
+* [playgrounds/go_generate](./playgrounds/go_generate)
+    * go generateのお試し
+
 * [playgrounds/go-playground_validator_with_cerrors](./playgrounds/go-playground_validator_with_cerrors)
     * `github.com/go-playground/validator/v10`を使う方法検証
     * 複数エラーの処理方法
     * エラーとなった内容をどう返すかのメッセージ組み立ての検証
+
+* [playgrounds/openapi_codegen](./playgrounds/openapi_codegen)
+    * OpenAPI Specからコードの生成
+    * oapi-codegen
 
 * [playgrounds/sqlc_with_golang_migrate](./playgrounds/sqlc_with_golang_migrate)
     * sqlc、jackc/pgx、golang-migrateの利用方法
