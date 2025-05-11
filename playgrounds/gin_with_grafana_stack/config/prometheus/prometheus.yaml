@@ -9,11 +9,19 @@ scrape_configs:
         labels:
           app: "prometheus"
   # Gin server (port: 8080, metrics_path: /metrics/prometheus)
-  - job_name: "myapp"
+  - job_name: "ginapp-local"
     metrics_path: /metrics/prometheus
     static_configs:
       - targets: ["host.docker.internal:8080"]
         labels:
-          app: "myapp"
+          app: "ginapp"
+          mode: "local"
+  - job_name: "ginapp-container"
+    metrics_path: /metrics/prometheus
+    static_configs:
+      - targets: ["ginapp:8080"]
+        labels:
+          app: "ginapp"
+          mode: "container"
 remote_write:
   - url: "http://mimir:9009/api/v1/push"

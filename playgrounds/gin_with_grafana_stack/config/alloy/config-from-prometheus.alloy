@@ -8,13 +8,26 @@ prometheus.scrape "prometheus" {
 	scrape_interval = "15s"
 }
 
-prometheus.scrape "myapp" {
+prometheus.scrape "ginapp_local" {
 	targets = [{
 		__address__ = "host.docker.internal:8080",
-		app         = "myapp",
+		app         = "ginapp",
+		mode        = "local",
 	}]
 	forward_to      = [prometheus.remote_write.default.receiver]
-	job_name        = "myapp"
+	job_name        = "ginapp-local"
+	scrape_interval = "15s"
+	metrics_path    = "/metrics/prometheus"
+}
+
+prometheus.scrape "ginapp_container" {
+	targets = [{
+		__address__ = "ginapp:8080",
+		app         = "ginapp",
+		mode        = "container",
+	}]
+	forward_to      = [prometheus.remote_write.default.receiver]
+	job_name        = "ginapp-container"
 	scrape_interval = "15s"
 	metrics_path    = "/metrics/prometheus"
 }

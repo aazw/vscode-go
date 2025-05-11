@@ -1,4 +1,15 @@
 services:
+  ginapp:
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    environment:
+      GINAPP_LOGGER: json # for Logs
+      GINAPP_HOST: "0.0.0.0" # for Metrics
+      GINAPP_PYROSCOPE_URL: "http://pyroscope:4040" # for Profiling
+      GINAPP_TEMPO_URL: "tempo:4318" # for Tracing
+
   # ##################################################################
   # Dashboard
   # ##################################################################
