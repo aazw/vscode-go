@@ -2,55 +2,66 @@
 
 ## 概要
 
-* Metrics
-* Logging
-* Tracing
-* Profiling
+* 4 Stacks
+    * Metrics
+        * Prometheus
+        * Alloy
+        * Mimir
+    * Logging
+        * Loki
+            * Promtail
+    * Tracing
+        * Tempo
+    * Profiling
+        * Gyroscope
 
 ```text
-# Metrics
-+---------+     +------------+     +-------+     +---------+
-|         |<----|   Alloy    |---->|       |     |         |
-|         |     +------------+     |       |     |         |
-| Gin App |                        | Mimir |<----| Grafana |
-|         |     +------------+     |       |     |         |
-|         |<----| Prometheus |---->|       |     |         |
-+---------+     +------------+     +-------+     +---------+
+# Metrics       
+             OpemMetrics                   HTTP
++---------+     HTTP      +------------+  (9009)  +-------+          +---------+
+|         |<--------------|   Alloy    |--------->|       |   HTTP   |         |
+|         |               +------------+          |       |  (9009)  |         |
+| Gin App |  OpemMetrics                   HTTP   | Mimir |<---------| Grafana |
+|         |     HTTP      +------------+  (9009)  |       |          |         |
+|         |<--------------| Prometheus |--------->|       |          |         |
++---------+               +------------+          +-------+          +---------+
 
 # Logging
-+---------+     +--------+                  +----------+     +------+
-|         |     |        |     +---|\       |          |     |      |
-|         |     |        |     |   |_\      |          |     |      |
-| Gin App |---->| Docker |---->| File |<----| Promtail |---->| Loki |
-|         |     | Engine |     |      |     |          |     |      |
-|         |     |        |     +------+     |          |     |      |
-+---------+     +--------+                  +----------+     +------+
++---------+           +--------+                  +----------+          +------+          +---------+
+|         |  StdOut   |        |     +---|\       |          |   HTTP   |      |   HTTP   |         |
+|         |  /StdErr  |        |     |   |_\      |          |  (3100)  |      |  (3100)  |         |
+| Gin App |---------->| Docker |---->| File |<----| Promtail |--------->| Loki |<---------| Grafana |
+|         |           | Engine |     | *1   |     |          |          |      |          |         |
+|         |           |        |     +------+     |          |          |      |          |         |
++---------+           +--------+                  +----------+          +------+          +---------+
+*1: /var/lib/docker/containers/<コンテナID>/<コンテナID>-json.log
 
 # Tracing
-+---------+ 
-|         | 
-|         | 
-| Gin App |-
-|         | 
-|         | 
-+---------+ 
++---------+             +-------+          +---------+
+|         |  OTLP HTTP  |       |   HTTP   |         |
+|         |   (4318)    |       |  (3200)  |         |
+| Gin App |------------>| Tempo |<---------| Grafana |
+|         |             |       |          |         |
+|         |             |       |          |         |
++---------+             +-------+          +---------+
+OTLP: OpenTelemetry Protocol
 
 # Profiling
-+---------+ 
-|         | 
-|         | 
-| Gin App |-
-|         | 
-|         | 
-+---------+ 
++---------+          +-----------+          +---------+
+|         |   HTTP   |           |   HTTP   |         |
+|         |  (4040)  |           |  (4040)  |         |
+| Gin App |--------->| Pyroscope |<---------| Grafana |
+|         |          |           |          |         |
+|         |          |           |          |         |
++---------+          +-----------+          +---------+
 ```
 
+### Grafana (Grafonnet)
 
-
-### Grafana (Jsonnet/Grafonnet)
-
-* https://github.com/grafana/grafonnet
-* https://github.com/grafana/grafonnet-lib ... archived
+* Grafonnet
+    * Jsonnet for Grafana
+    * https://github.com/grafana/grafonnet
+    * https://github.com/grafana/grafonnet-lib ... archived
 
 ### Grafana Mimir
 
@@ -63,21 +74,11 @@
     * Apployもremote_writeプロトコルでMimirにデータを送信できるクライアント
     * 小規模環境ではPrometheus単体でMimirへの書き込みを行う
     * 大規模・複雑環境ではAlloyを用いて多様なデータソースを統一的に集約し、Mimirへ送信するパイプラインを構築する
-* https://grafana.com/docs/mimir/latest/
-    * https://grafana.com/docs/mimir/latest/get-started/
-* https://github.com/grafana/mimir
-* https://hub.docker.com/r/grafana/mimir
 * OpenMetrics
     * OpenMetrics は Prometheus の Exposition Format を一般化した標準仕様
         * OpenMetrics はもともと Prometheus のテキスト／Protocol Buffers 形式を拡張・標準化したもの
     * メトリクスを「どう表現して HTTP で公開するか」を定めている
     * これに対応すれば、Prometheus がスクレイプするエンドポイントも、Prometheus 互換のバックエンド（Mimir を含む）も問題なく取り込める
-* OpenMetrics 対応方法
-    * https://github.com/prometheus/client_golang
-        * github.com/prometheus/client_golang/prometheus
-        * github.com/prometheus/client_golang/prometheus/promhttp
-    * https://github.com/open-telemetry/opentelemetry-go
-        * https://opentelemetry.io/docs/languages/go/getting-started/
 * OpenMetrics vs OpenTelemetry
     * 両者は同じ CNCF の傘下にあるにもかかわらず別プロジェクトとして存在する
     * OpenMetrics
@@ -92,15 +93,23 @@
         * OpenTelemetry は Cloud Native Computing Foundation（CNCF）のインキュベーティングプロジェクト（Sandbox→Incubating）
         * トレース／メトリクス／ログといったあらゆる観測データの 収集から送信まで をカバーする包括的フレームワーク
         * SDK や API、OTLP プロトコル、各種エクスポーターを提供し、多様なバックエンドとの連携を実現する
-* https://grafana.com/docs/mimir/latest/configure/configuration-parameters/
+* https://hub.docker.com/r/grafana/mimir
+* https://github.com/grafana/mimir
+* https://grafana.com/docs/mimir/latest/
+    * https://grafana.com/docs/mimir/latest/get-started/
+    * https://grafana.com/docs/mimir/latest/configure/configuration-parameters/
+* OpenMetrics対応方法
+    * https://github.com/prometheus/client_golang
+        * github.com/prometheus/client_golang/prometheus
+        * github.com/prometheus/client_golang/prometheus/promhttp
+    * https://github.com/open-telemetry/opentelemetry-go
+        * https://opentelemetry.io/docs/languages/go/getting-started/
 * https://community.zenduty.com/t/how-to-properly-configure-mimir-data-source-in-grafana/976/3
-
-### Prometheus
-
-* https://prometheus.io/
-* https://hub.docker.com/r/prom/prometheus
-* https://github.com/prometheus/prometheus
-* https://prometheus.io/docs/prometheus/latest/configuration/configuration/#scrape_config
+* Prometheus
+    * https://prometheus.io/
+        * https://prometheus.io/docs/prometheus/latest/configuration/configuration/#scrape_config
+    * https://hub.docker.com/r/prom/prometheus
+    * https://github.com/prometheus/prometheus
 
 ### Grafana Alloy
 
@@ -109,7 +118,9 @@
 * 小規模や既存の Prometheus 運用では、Prometheus 本体を直接スクレイプして TSDB に書き込む
 * 大規模／複雑環境では、Alloy を前段 Collector として使い、prometheus.scrape で収集 → 演算・フィルター → prometheus.remote_write で Prometheus（または Mimir）に書き込む
 * https://grafana.com/docs/alloy/latest/
+    * https://grafana.com/docs/alloy/latest/set-up/migrate/from-prometheus/#convert-a-prometheus-configuration
 * https://hub.docker.com/r/grafana/alloy
+* https://github.com/grafana/alloy
 
 | ツール        | 役割                                            | 主な用途                                 |
 |---------------|-------------------------------------------------|------------------------------------------|
@@ -118,13 +129,11 @@
 
 #### AlloyでPrometheusの設定ファイルをAlloy向けに変換できる
 
-https://grafana.com/docs/alloy/latest/set-up/migrate/from-prometheus/#convert-a-prometheus-configuration
-
 ```bash
 alloy convert --source-format=prometheus --bypass-errors --output=<OUTPUT_CONFIG_PATH> <INPUT_CONFIG_PATH>
 ```
 
-`compose.yaml`にて`alloy-convert`として定義済. 以下でprometheus.yamlから変換できる.
+また`compose.yaml`にて`alloy-convert`としてタスク定義済. 以下で`prometheus.yaml`から変換できる.
 
 ```bash
 docker compose run alloy-convert
@@ -135,25 +144,19 @@ docker compose run alloy-convert
 * Logging
 * Like Prometheus, but for logs
 * Loki
-    * https://grafana.com/oss/loki/
-    * https://grafana.com/docs/loki/latest/
-    * https://github.com/grafana/loki
     * https://hub.docker.com/r/grafana/loki
+    * https://grafana.com/oss/loki/
+        * https://grafana.com/docs/loki/latest/
+        * https://grafana.com/docs/loki/latest/setup/install/docker/
+        * https://grafana.com/docs/loki/latest/configure/
+        * https://grafana.com/docs/loki/latest/reference/loki-http-api/
+    * https://github.com/grafana/loki
+        * Deprecated fields in loki-local-config causing unmarshal error  
+          https://github.com/grafana/loki/issues/16990
 * Promtail
-    * https://grafana.com/docs/loki/latest/send-data/promtail/
     * https://hub.docker.com/r/grafana/promtail
+    * https://grafana.com/docs/loki/latest/send-data/promtail/
     * Loki用エージェント
-* https://grafana.com/docs/loki/latest/setup/install/docker/
-* Deprecated fields in loki-local-config causing unmarshal error  
-  https://github.com/grafana/loki/issues/16990
-* https://grafana.com/docs/loki/latest/configure/
-* https://grafana.com/docs/loki/latest/reference/loki-http-api/
-
-```bash
-docker compose up loki
-
-docker compose up promtail
-```
 
 ### Grafana Tempo
 
@@ -188,8 +191,8 @@ docker compose up promtail
 * Profiling
 * https://hub.docker.com/r/grafana/pyroscope
 * https://grafana.com/oss/pyroscope/
-* https://grafana.com/docs/pyroscope/latest/
-    * https://grafana.com/docs/pyroscope/latest/configure-client/language-sdks/go_push/
+    * https://grafana.com/docs/pyroscope/latest/
+        * https://grafana.com/docs/pyroscope/latest/configure-client/language-sdks/go_push/
 * https://github.com/grafana/pyroscope
     * https://github.com/grafana/pyroscope/tree/next/examples
         * https://github.com/grafana/pyroscope/tree/next/examples/golang-push
@@ -210,7 +213,48 @@ docker compose up promtail
 
 ## 検証
 
+### Grafana
 
+```bash
+# 1
+docker compose up grafana
+```
+
+### Metrics
+
+```bash
+# 1
+docker compose up mimir
+
+# 2: alloy or prometheus
+docker compose up alloy
+
+docker compose up prometheus
+```
+
+### Logs
+
+```bash
+# 1
+docker compose up loki
+
+# 2
+docker compose up promtail
+```
+
+### Tracing
+
+```bash
+docker compose up tempo
+```
+
+### Profiling
+
+```bash
+docker compose up pyroscope
+```
+
+*** 
 
 ##
 
