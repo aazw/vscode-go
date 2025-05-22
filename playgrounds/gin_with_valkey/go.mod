@@ -3,8 +3,8 @@ module github.com/aazw/vscode-go/playgrounds/gin_with_valkey
 go 1.24.3
 
 require (
-	github.com/gin-contrib/sessions v1.0.3
-	github.com/gin-gonic/gin v1.10.0
+	github.com/gin-contrib/sessions v1.0.4
+	github.com/gin-gonic/gin v1.10.1
 )
 
 require (
