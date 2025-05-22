@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # move to project root
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 cd ${SCRIPT_DIR}/..
 
 # print header
@@ -19,5 +19,5 @@ go list -json std | jq -r '
       | .ImportPath as $p
       | (.Doc // "" | split("\n") | .[0]) as $syn
       | "| https://pkg.go.dev/\($p) | | \($syn) |"
-    ' \
-  | column -t -s '|' -o '|'
+    ' |
+	column -t -s '|' -o '|'

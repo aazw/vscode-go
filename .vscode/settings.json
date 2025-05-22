@@ -25,6 +25,11 @@
       {
         "match": "\\bDockerfile$",
         "cmd": "dockerfmt -w \"${file}\""
+      },
+      {
+        // シェルスクリプトのフォーマット
+        "match": "\\.sh$",
+        "cmd": "shfmt -w \"${file}\""
       }
     ]
   }
