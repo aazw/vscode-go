@@ -2,8 +2,9 @@ module github.com/aazw/vscode-go/playgrounds/errors_cockroachdb
 
 go 1.24.2
 
+require github.com/cockroachdb/errors v1.12.0
+
 require (
-	github.com/cockroachdb/errors v1.12.0 // indirect
 	github.com/cockroachdb/logtags v0.0.0-20230118201751-21c54148d20b // indirect
 	github.com/cockroachdb/redact v1.1.5 // indirect
 	github.com/getsentry/sentry-go v0.27.0 // indirect

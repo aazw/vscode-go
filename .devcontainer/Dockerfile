@@ -14,6 +14,7 @@ ARG GO_DOCKERFMT_VERSION=v0.3.7
 ARG GO_OAPI_CODEGEN_VERSION=v2.4.1
 ARG GO_OGEN_VERSION=v1.13.0
 ARG GO_SHFMT_VERSION=v3.11.0
+ARG GO_GO_TASK_VERSION=v3.43.3
 
 # for npm tools
 ARG NPM_OPENAPI_GENERATOR_CLI_VERSION=2.20.2
@@ -168,3 +169,9 @@ RUN pipx ensurepath
 # https://github.com/cyclotruc/gitingest
 ARG PIPX_GITINGEST_VERSION
 RUN pipx install gitingest==${PIPX_GITINGEST_VERSION}
+
+# go-task
+# https://github.com/go-task/task
+# https://taskfile.dev/
+ARG GO_GO_TASK_VERSION
+RUN go install github.com/go-task/task/v3/cmd/task@${GO_GO_TASK_VERSION}
