@@ -19,6 +19,10 @@ ARG GO_SHFMT_VERSION=v3.11.0
 ARG NPM_OPENAPI_GENERATOR_CLI_VERSION=2.20.2
 ARG NPM_IBM_OPENAPI_VALIDATOR_VERSION=1.35.2
 ARG NPM_REDOCLY_CLI_VERSION=1.34.3
+ARG NPM_RENOVATE_VERSION=40.14.4
+
+# for pipx tools
+ARG PIPX_GITINGEST_VERSION=0.1.4
 
 # ##########################################################################################
 # builder images
@@ -148,3 +152,19 @@ COPY --from=dive-builder /usr/local/bin/dive /usr/local/bin/
 # https://github.com/mvdan/sh
 ARG GO_SHFMT_VERSION
 RUN go install mvdan.cc/sh/v3/cmd/shfmt@${GO_SHFMT_VERSION}
+
+# renovate
+# https://github.com/renovatebot/renovate
+# https://www.npmjs.com/package/renovate
+ARG NPM_RENOVATE_VERSION
+RUN yarn global add renovate@${NPM_RENOVATE_VERSION}
+
+# pipx
+# https://github.com/pypa/pipx
+RUN apt-get -y install pipx
+RUN pipx ensurepath
+
+# gitingest
+# https://github.com/cyclotruc/gitingest
+ARG PIPX_GITINGEST_VERSION
+RUN pipx install gitingest==${PIPX_GITINGEST_VERSION}
