@@ -3,7 +3,7 @@ module github.com/aazw/vscode-go/playgrounds/gin_with_grafana_stack
 go 1.24.3
 
 require (
-	github.com/gin-gonic/gin v1.10.0
+	github.com/gin-gonic/gin v1.10.1
 	github.com/grafana/pyroscope-go v1.2.2
 	github.com/prometheus/client_golang v1.22.0
 	github.com/urfave/cli/v3 v3.3.3
