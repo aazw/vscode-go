@@ -1,6 +1,6 @@
 module github.com/aazw/vscode-go/playgrounds/cobra_cli
 
-go 1.24.2
+go 1.24.3
 
 require (
 	github.com/spf13/cobra v1.9.1

@@ -1,6 +1,6 @@
 module github.com/aazw/vscode-go/playgrounds/errors_cockroachdb
 
-go 1.24.2
+go 1.24.3
 
 require github.com/cockroachdb/errors v1.12.0
 
