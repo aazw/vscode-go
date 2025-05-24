@@ -52,9 +52,15 @@
     * 複数エラーの処理方法
     * エラーとなった内容をどう返すかのメッセージ組み立ての検証
 
+* [playgrounds/go_generate](./playgrounds/go_generate)
+    * `go geneate`お試し
+
 * [playgrounds/openapi_codegen](./playgrounds/openapi_codegen)
     * OpenAPI Specからコードの生成
     * oapi-codegen
+
+* [playgrounds/scs_with_redis](./playgrounds/scs_with_redis)
+    * セッション管理用パッケージお試し
 
 * [playgrounds/sqlc_with_golang_migrate](./playgrounds/sqlc_with_golang_migrate)
     * sqlc、jackc/pgx、golang-migrateの利用方法
