@@ -9,8 +9,8 @@ set -euo pipefail
 
 for dir in ./playgrounds/*; do
 	if [ -f "$dir/go.mod" ]; then
-		echo "Running go mod tidy in $dir"
-		(cd "$dir" && go mod tidy)
+		echo "Listing $dir"
+		(cd "$dir" && go list ./...)
 		echo ""
 	fi
 done

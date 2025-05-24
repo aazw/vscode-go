@@ -9,7 +9,8 @@ set -euo pipefail
 
 for dir in ./playgrounds/*; do
 	if [ -f "$dir/go.mod" ]; then
-		echo "🔨 Building $dir"
+		echo "Building $dir"
 		(cd "$dir" && go build -o /dev/null -buildvcs=false .)
+		echo ""
 	fi
 done
