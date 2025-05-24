@@ -1,8 +1,8 @@
 # for main image
-ARG TYPESCRIPT_NODE_VERSION=22-bookworm
+ARG DOCKER_MAIN_VERSION=1.24.3-bookworm
 
 # for builder images
-ARG DOCKER_GOLANG_VERSION=1.24
+ARG DOCKER_NODE_VERSION=22.16.0-bookworm
 ARG DOCKER_JQ_VERSION=1.7.1
 ARG DOCKER_GOLANGCI_LINT_VERSION=v2.1.6
 ARG DOCKER_SQLC_VERSION=1.29.0
@@ -29,9 +29,10 @@ ARG PIPX_GITINGEST_VERSION=0.1.4
 # builder images
 # ##########################################################################################
 
-# golang
-# https://hub.docker.com/_/golang
-FROM golang:${DOCKER_GOLANG_VERSION} AS golang-builder
+# node
+# https://hub.docker.com/_/node
+# https://note.milldea.com/posts/two-ways-to-install-nodejs-with-fixed-version-in-dockerfile
+FROM node:${DOCKER_NODE_VERSION} AS node-builder
 
 # jq
 # https://github.com/jqlang/jq
@@ -61,42 +62,56 @@ FROM wagoodman/dive:${DOCKER_DIVE_VERSION} AS dive-builder
 # main image
 # ##########################################################################################
 
-# golang
-# https://github.com/devcontainers/images/tree/main/src/go
-# https://mcr.microsoft.com/v2/vscode/devcontainers/go/tags/list
-# FROM mcr.microsoft.com/devcontainers/go:${GOLANG_VERSION}
+# debian version
+# 10 (Buster)
+# 11 (Bullseye)
+# 12 (Bookworm)
+# 13 (Trixie)
+# 14 (Forky)
 
-# typescript-node
-# https://github.com/devcontainers/images/tree/main/src/typescript-node
-# https://mcr.microsoft.com/v2/vscode/devcontainers/typescript-node/tags/list
-FROM mcr.microsoft.com/devcontainers/typescript-node:${TYPESCRIPT_NODE_VERSION}
+# golang
+# https://hub.docker.com/_/golang
+# https://github.com/devcontainers/images/tree/main/src/go
+# https://github.com/devcontainers/images/blob/main/src/go/.devcontainer/Dockerfile
+# https://mcr.microsoft.com/v2/vscode/devcontainers/go/tags/list
+FROM golang:${DOCKER_MAIN_VERSION}
 
 RUN apt-get -y update
 RUN apt-get -y install \
-    apt-transport-https \
-    build-essential \
     ca-certificates \
-    gnupg \
-    gnupg-agent \
-    lsb-release \
-    software-properties-common \
     curl \
-    git
+    git \
+    nano
 
-# golang
+# node
 # refs above
-COPY --from=golang-builder /usr/local/go /usr/local/
-ENV PATH=$PATH:/usr/local/go/bin/:/root/go/bin/
+COPY --from=node-builder /usr/local/bin/node /usr/local/bin/node
+COPY --from=node-builder /usr/local/lib/node_modules /usr/local/lib/node_modules
+RUN ln -s /usr/local/bin/node /usr/local/bin/nodejs \
+    && ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
+    && ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npx
 
-# docker
-# https://matsuand.github.io/docs.docker.jp.onthefly/engine/install/debian/
-RUN for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do sudo apt-get remove $pkg; done
-RUN curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-RUN echo \
-    "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
-    $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list >/dev/null
-RUN apt-get -y update
-RUN apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+# yarn
+RUN npm install -g yarn
+
+# pipx
+# https://github.com/pypa/pipx
+RUN apt-get -y install pipx
+RUN pipx ensurepath
+
+# add vscode user
+# https://code.visualstudio.com/remote/advancedcontainers/add-nonroot-user#_creating-a-nonroot-user
+ARG USERNAME=vscode
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
+    && apt-get update \
+    && apt-get install -y sudo \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL >/etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME
+USER $USERNAME
 
 # dockerfmt
 # https://github.com/reteps/dockerfmt
@@ -159,11 +174,6 @@ RUN go install mvdan.cc/sh/v3/cmd/shfmt@${GO_SHFMT_VERSION}
 # https://www.npmjs.com/package/renovate
 ARG NPM_RENOVATE_VERSION
 RUN yarn global add renovate@${NPM_RENOVATE_VERSION}
-
-# pipx
-# https://github.com/pypa/pipx
-RUN apt-get -y install pipx
-RUN pipx ensurepath
 
 # gitingest
 # https://github.com/cyclotruc/gitingest
