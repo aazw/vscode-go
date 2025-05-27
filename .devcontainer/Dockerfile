@@ -185,3 +185,42 @@ RUN pipx install gitingest==${PIPX_GITINGEST_VERSION}
 # https://taskfile.dev/
 ARG GO_GO_TASK_VERSION
 RUN go install github.com/go-task/task/v3/cmd/task@${GO_GO_TASK_VERSION}
+
+USER root
+
+# claude-code
+# https://github.com/anthropics/claude-code
+# https://github.com/anthropics/claude-code/blob/main/.devcontainer/devcontainer.json
+# https://github.com/anthropics/claude-code/blob/main/.devcontainer/Dockerfile
+# https://github.com/anthropics/claude-code/blob/main/.devcontainer/init-firewall.sh
+RUN apt update -y && apt install -y less \
+    git \
+    procps \
+    sudo \
+    fzf \
+    zsh \
+    man-db \
+    unzip \
+    gnupg2 \
+    gh \
+    iptables \
+    ipset \
+    iproute2 \
+    dnsutils \
+    aggregate \
+    jq
+RUN npm install -g @anthropic-ai/claude-code
+ENV DEVCONTAINER=true
+
+# init-firewall.sh
+# https://docs.docker.com/reference/dockerfile/#adding-files-from-a-git-repository
+# https://docs.docker.com/build/concepts/context/#url-fragments
+# ADD https://github.com/anthropics/claude-code.git#main:.devcontainer/init-firewall.sh /usr/local/bin/
+ARG CLAUDE_CODE_COMMIT_HASH=bd5ca708adf82c4b81857abf40fe36d9d9cc3d1c
+RUN curl -fsSL -o /init-firewall.sh https://raw.githubusercontent.com/anthropics/claude-code/${CLAUDE_CODE_COMMIT_HASH}/.devcontainer/init-firewall.sh \
+    && chmod 644 /init-firewall.sh
+RUN chmod +x /init-firewall.sh \
+    && echo "node ALL=(root) NOPASSWD: /usr/local/bin/init-firewall.sh" >/etc/sudoers.d/node-firewall \
+    && chmod 0440 /etc/sudoers.d/node-firewall
+
+USER $USERNAME

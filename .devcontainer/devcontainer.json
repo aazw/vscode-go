@@ -27,7 +27,10 @@
   "remoteUser": "vscode",
   "remoteEnv": {
     "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}",
-    "TZ": "Asia/Tokyo"
+    "TZ": "Asia/Tokyo",
+    "NODE_OPTIONS": "--max-old-space-size=4096",
+    "CLAUDE_CONFIG_DIR": "/home/vscode/.claude",
+    "POWERLEVEL9K_DISABLE_GITSTATUS": "true"
   },
   "runArgs": [
     "--name",
@@ -35,7 +38,10 @@
     "--add-host",
     "host.docker.internal:host-gateway",
     "--cap-add=SYS_PTRACE",
+    "--cap-add=NET_ADMIN", // iptablesのため
+    "--cap-add=NET_RAW", // iptablesのため
     "--security-opt",
     "seccomp=unconfined"
-  ]
+  ],
+  "postCreateCommand": "sleep 60 && sudo /init-firewall.sh" // 即座に実行すると、FWのせいで拡張機能やFeatureがインストールできないので遅らせる
 }
