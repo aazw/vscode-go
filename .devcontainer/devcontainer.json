@@ -10,10 +10,9 @@
   "customizations": {
     "vscode": {
       "extensions": [
+        "emeraldwalk.runonsave",
         "ms-azuretools.vscode-containers",
         "ms-azuretools.vscode-docker",
-        "esbenp.prettier-vscode",
-        "emeraldwalk.RunOnSave",
         "golang.go"
       ],
       "settings": {
