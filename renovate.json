@@ -1,59 +1,88 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended", ":configMigration"],
-  "labels": ["Renovate"],
+  "extends": [
+    "config:recommended",
+    ":configMigration"
+  ],
+  "labels": [
+    "Renovate"
+  ],
   "prHourlyLimit": 0,
   "prConcurrentLimit": 10,
-  "assignees": ["aazw"],
+  "assignees": [
+    "aazw"
+  ],
   "customManagers": [
     {
       "customType": "regex",
-      "managerFilePatterns": ["/^\\.devcontainer\\/Dockerfile$/"],
+      "managerFilePatterns": [
+        "/^\\.devcontainer\\/Dockerfile$/"
+      ],
       "matchStringsStrategy": "any",
-      "matchStrings": ["ARG\\s+GO_DOCKERFMT_VERSION=(?<currentValue>\\S+)"],
+      "matchStrings": [
+        "ARG\\s+GO_DOCKERFMT_VERSION=(?<currentValue>\\S+)"
+      ],
       "datasourceTemplate": "go",
       "depNameTemplate": "github.com/reteps/dockerfmt",
       "versioningTemplate": "semver-coerced"
     },
     {
       "customType": "regex",
-      "managerFilePatterns": ["/^\\.devcontainer\\/Dockerfile$/"],
+      "managerFilePatterns": [
+        "/^\\.devcontainer\\/Dockerfile$/"
+      ],
       "matchStringsStrategy": "any",
-      "matchStrings": ["ARG\\s+GO_OAPI_CODEGEN_VERSION=(?<currentValue>\\S+)"],
+      "matchStrings": [
+        "ARG\\s+GO_OAPI_CODEGEN_VERSION=(?<currentValue>\\S+)"
+      ],
       "datasourceTemplate": "go",
       "depNameTemplate": "github.com/oapi-codegen/oapi-codegen/v2",
       "versioningTemplate": "semver-coerced"
     },
     {
       "customType": "regex",
-      "managerFilePatterns": ["/^\\.devcontainer\\/Dockerfile$/"],
+      "managerFilePatterns": [
+        "/^\\.devcontainer\\/Dockerfile$/"
+      ],
       "matchStringsStrategy": "any",
-      "matchStrings": ["ARG\\s+GO_OGEN_VERSION=(?<currentValue>\\S+)"],
+      "matchStrings": [
+        "ARG\\s+GO_OGEN_VERSION=(?<currentValue>\\S+)"
+      ],
       "datasourceTemplate": "go",
       "depNameTemplate": "github.com/ogen-go/ogen",
       "versioningTemplate": "semver-coerced"
     },
     {
       "customType": "regex",
-      "managerFilePatterns": ["/^\\.devcontainer\\/Dockerfile$/"],
+      "managerFilePatterns": [
+        "/^\\.devcontainer\\/Dockerfile$/"
+      ],
       "matchStringsStrategy": "any",
-      "matchStrings": ["ARG\\s+GO_SHFMT_VERSION=(?<currentValue>\\S+)"],
+      "matchStrings": [
+        "ARG\\s+GO_SHFMT_VERSION=(?<currentValue>\\S+)"
+      ],
       "datasourceTemplate": "go",
       "depNameTemplate": "mvdan.cc/sh/v3",
       "versioningTemplate": "semver-coerced"
     },
     {
       "customType": "regex",
-      "managerFilePatterns": ["/^\\.devcontainer\\/Dockerfile$/"],
+      "managerFilePatterns": [
+        "/^\\.devcontainer\\/Dockerfile$/"
+      ],
       "matchStringsStrategy": "any",
-      "matchStrings": ["ARG\\s+GO_GO_TASK_VERSION=(?<currentValue>\\S+)"],
+      "matchStrings": [
+        "ARG\\s+GO_GO_TASK_VERSION=(?<currentValue>\\S+)"
+      ],
       "datasourceTemplate": "go",
       "depNameTemplate": "github.com/go-task/task/v3",
       "versioningTemplate": "semver-coerced"
     },
     {
       "customType": "regex",
-      "managerFilePatterns": ["/^\\.devcontainer\\/Dockerfile$/"],
+      "managerFilePatterns": [
+        "/^\\.devcontainer\\/Dockerfile$/"
+      ],
       "matchStringsStrategy": "any",
       "matchStrings": [
         "ARG\\s+NPM_OPENAPI_GENERATOR_CLI_VERSION=(?<currentValue>\\S+)"
@@ -64,7 +93,9 @@
     },
     {
       "customType": "regex",
-      "managerFilePatterns": ["/^\\.devcontainer\\/Dockerfile$/"],
+      "managerFilePatterns": [
+        "/^\\.devcontainer\\/Dockerfile$/"
+      ],
       "matchStringsStrategy": "any",
       "matchStrings": [
         "ARG\\s+NPM_IBM_OPENAPI_VALIDATOR_VERSION=(?<currentValue>\\S+)"
@@ -75,27 +106,39 @@
     },
     {
       "customType": "regex",
-      "managerFilePatterns": ["/^\\.devcontainer\\/Dockerfile$/"],
+      "managerFilePatterns": [
+        "/^\\.devcontainer\\/Dockerfile$/"
+      ],
       "matchStringsStrategy": "any",
-      "matchStrings": ["ARG\\s+NPM_REDOCLY_CLI_VERSION=(?<currentValue>\\S+)"],
+      "matchStrings": [
+        "ARG\\s+NPM_REDOCLY_CLI_VERSION=(?<currentValue>\\S+)"
+      ],
       "datasourceTemplate": "npm",
       "depNameTemplate": "@redocly/cli",
       "versioningTemplate": "npm"
     },
     {
       "customType": "regex",
-      "managerFilePatterns": ["/^\\.devcontainer\\/Dockerfile$/"],
+      "managerFilePatterns": [
+        "/^\\.devcontainer\\/Dockerfile$/"
+      ],
       "matchStringsStrategy": "any",
-      "matchStrings": ["ARG\\s+NPM_RENOVATE_VERSION=(?<currentValue>\\S+)"],
+      "matchStrings": [
+        "ARG\\s+NPM_RENOVATE_VERSION=(?<currentValue>\\S+)"
+      ],
       "datasourceTemplate": "npm",
       "depNameTemplate": "renovate",
       "versioningTemplate": "npm"
     },
     {
       "customType": "regex",
-      "managerFilePatterns": ["/^\\.devcontainer\\/Dockerfile$/"],
+      "managerFilePatterns": [
+        "/^\\.devcontainer\\/Dockerfile$/"
+      ],
       "matchStringsStrategy": "any",
-      "matchStrings": ["ARG\\s+PIPX_GITINGEST_VERSION=(?<currentValue>\\S+)"],
+      "matchStrings": [
+        "ARG\\s+PIPX_GITINGEST_VERSION=(?<currentValue>\\S+)"
+      ],
       "datasourceTemplate": "pypi",
       "depNameTemplate": "gitingest",
       "versioningTemplate": "semver-coerced"
@@ -103,19 +146,31 @@
   ],
   "packageRules": [
     {
-      "matchPaths": [".devcontainer/**"],
+      "matchFileNames": [
+        ".devcontainer/**"
+      ],
       "groupName": "devcontainer"
     },
     {
-      "matchPaths": ["**/go.mod", "**/go.sum", "go.work", "go.work.sum"],
+      "matchFileNames": [
+        "**/go.mod",
+        "**/go.sum",
+        "go.work",
+        "go.work.sum"
+      ],
       "groupName": "gomod"
     },
     {
-      "matchPaths": ["Dockerfile", "compose.yaml"],
+      "matchFileNames": [
+        "Dockerfile",
+        "compose.yaml"
+      ],
       "groupName": "docker"
     },
     {
-      "matchPaths": [".github/workflows/*.yaml"],
+      "matchFileNames": [
+        ".github/workflows/*.yaml"
+      ],
       "groupName": "githubactions"
     }
   ]
