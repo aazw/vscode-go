@@ -1,5 +1,3 @@
-github.com/aazw/vscode-go/playgrounds/custom_error_with_stacktrace v0.0.0-20250531130404-5b692fe2816c h1:XsMNt1pUWTFlgY5IBJivAqeLj+d64ibmXJ/yZg58TSc=
-github.com/aazw/vscode-go/playgrounds/custom_error_with_stacktrace v0.0.0-20250531130404-5b692fe2816c/go.mod h1:uX5Pcp6RY4XagHq4pK88LtJ8tmWD9y3lG3wKUNreNDU=
 github.com/aazw/vscode-go/playgrounds/custom_error_with_stacktrace v0.0.0-20250531143519-325f9dfda7b8 h1:TIgaRAPAue8WKf8Avl9UNJO6qhRbWDKRCWQallZoIrc=
 github.com/aazw/vscode-go/playgrounds/custom_error_with_stacktrace v0.0.0-20250531143519-325f9dfda7b8/go.mod h1:uX5Pcp6RY4XagHq4pK88LtJ8tmWD9y3lG3wKUNreNDU=
 github.com/cockroachdb/errors v1.12.0 h1:d7oCs6vuIMUQRVbi6jWWWEJZahLCfJpnJSVobd1/sUo=
