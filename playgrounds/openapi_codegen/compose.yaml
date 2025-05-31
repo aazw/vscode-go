@@ -1,5 +1,5 @@
 services:
   openapi-generator-online:
-    image: openapitools/openapi-generator-online
+    image: openapitools/openapi-generator-online@sha256:18fc36dec97343e4a24dba6af20313679fea121125bc7bbb4706c6b2c6f62726
     ports:
       - 8888:8080
