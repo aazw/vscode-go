@@ -8,6 +8,8 @@ on:
     paths:
       - "**/go.mod"
       - "**/go.sum"
+      - "go.work"
+      - "go.work.sum"
       - "renovate.json"
 
 permissions:
@@ -33,6 +35,8 @@ jobs:
             go_files:
               - '**/go.mod'
               - '**/go.sum'
+              - "go.work"
+              - "go.work.sum"
             renovate_json_file:
               - 'renovate.json'
 
