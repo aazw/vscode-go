@@ -146,6 +146,7 @@ FROM wagoodman/dive:${DOCKER_DIVE_VERSION} AS dive-builder
 # https://github.com/devcontainers/images/blob/main/src/go/.devcontainer/Dockerfile
 # https://mcr.microsoft.com/v2/vscode/devcontainers/go/tags/list
 FROM golang:${DOCKER_GO_VERSION}
+ENV DEBIAN_FRONTEND=noninteractive
 
 # add distribution packages
 RUN apt-get -y update
