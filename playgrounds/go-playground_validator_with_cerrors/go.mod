@@ -3,7 +3,7 @@ module github.com/aazw/vscode-go/playgrounds/go-playground_validator_with_cerror
 go 1.24.3
 
 require (
-	github.com/aazw/vscode-go/playgrounds/custom_error_with_stacktrace v0.0.0-20250531143519-325f9dfda7b8
+	github.com/aazw/vscode-go/playgrounds/custom_error_with_stacktrace v0.0.0-20250603111706-bd780d40d6d5
 	github.com/go-playground/validator/v10 v10.26.0
 )
 
