@@ -5,6 +5,9 @@
   "prHourlyLimit": 0,
   "prConcurrentLimit": 10,
   "assignees": ["aazw"],
+  "env": {
+    "GOPRIVATE": "github.com/aazw/*"
+  },
   "customManagers": [
     {
       "customType": "regex",
