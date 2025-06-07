@@ -41,6 +41,6 @@
     "--cap-add=NET_RAW", // iptablesのため
     "--security-opt",
     "seccomp=unconfined"
-  ],
-  "postCreateCommand": "sleep 60 && sudo /init-firewall.sh" // 即座に実行すると、FWのせいで拡張機能やFeatureがインストールできないので遅らせる
+  ]
+  // "postCreateCommand": "sleep 120 && sudo /init-firewall.sh" // 即座に実行すると、FWのせいで拡張機能やFeatureがインストールできないので遅らせる
 }
