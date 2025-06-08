@@ -4,13 +4,16 @@
     {
       "label": "Delete all .DS_Store",
       "type": "shell",
-      "command": "${workspaceFolder}/scripts/remove_ds_store.sh",
+      "command": "task remove_ds_store",
       "group": "none",
       "presentation": {
         "reveal": "always",
         "panel": "new"
       },
-      "problemMatcher": [] // 空配列を指定すると「このタスクの出力をスキャンしない」が固定化される
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
     }
   ]
 }
