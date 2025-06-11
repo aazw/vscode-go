@@ -107,7 +107,7 @@
   "packageRules": [
     {
       "enabled": false,
-      "matchManagers": ["custom.regex", "regex"],
+      "matchManagers": ["custom.regex", "custom.regex"],
       "matchDatasources": ["npm"],
       "matchDepNames": ["renovate"],
       "matchUpdateTypes": ["patch"]
