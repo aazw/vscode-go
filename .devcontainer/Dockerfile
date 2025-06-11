@@ -36,6 +36,8 @@ ARG NPM_OPENAPI_GENERATOR_CLI_VERSION=2.20.2
 ARG NPM_IBM_OPENAPI_VALIDATOR_VERSION=1.35.2
 ARG NPM_REDOCLY_CLI_VERSION=1.34.3
 ARG NPM_SQL_FORMATTER_VERSION=15.6.2
+ARG NPM_CLAUDE_CODE_VERSION=1.0.19
+ARG NPM_CCUSAGE_VERSION=0.7.0
 
 # for pipx tools
 ARG PIPX_GITINGEST_VERSION=0.1.4
@@ -147,6 +149,7 @@ FROM wagoodman/dive:${DOCKER_DIVE_VERSION} AS dive-builder
 # https://mcr.microsoft.com/v2/vscode/devcontainers/go/tags/list
 FROM golang:${DOCKER_GO_VERSION}
 ENV DEBIAN_FRONTEND=noninteractive
+ENV DEBCONF_NOWARNINGS=yes
 
 # add distribution packages
 RUN apt-get -y update
@@ -293,7 +296,8 @@ RUN apt update -y && apt install -y \
     iproute2 \
     dnsutils \
     aggregate
-RUN npm install -g @anthropic-ai/claude-code
+ARG NPM_CLAUDE_CODE_VERSION
+RUN npm install -g @anthropic-ai/claude-code@${NPM_CLAUDE_CODE_VERSION}
 ENV DEVCONTAINER=true
 
 # init-firewall.sh
@@ -306,6 +310,12 @@ RUN curl -fsSL -o /init-firewall.sh https://raw.githubusercontent.com/anthropics
 RUN chmod +x /init-firewall.sh \
     && echo "node ALL=(root) NOPASSWD: /usr/local/bin/init-firewall.sh" >/etc/sudoers.d/node-firewall \
     && chmod 0440 /etc/sudoers.d/node-firewall
+
+## ccusage
+# https://github.com/ryoppippi/ccusage
+# https://www.npmjs.com/package/ccusage
+ARG NPM_CCUSAGE_VERSION
+RUN npm install -g ccusage@${NPM_CCUSAGE_VERSION}
 
 # add vscode user
 # https://code.visualstudio.com/remote/advancedcontainers/add-nonroot-user#_creating-a-nonroot-user
