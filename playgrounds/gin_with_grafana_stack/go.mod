@@ -6,7 +6,7 @@ require (
 	github.com/gin-gonic/gin v1.10.1
 	github.com/grafana/pyroscope-go v1.2.2
 	github.com/prometheus/client_golang v1.22.0
-	github.com/urfave/cli/v3 v3.3.5
+	github.com/urfave/cli/v3 v3.3.8
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.61.0
 	go.opentelemetry.io/otel v1.36.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp v1.36.0
