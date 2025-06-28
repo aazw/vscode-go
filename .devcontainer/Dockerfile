@@ -35,6 +35,7 @@ ARG NPM_PRETTIER_VERSION=3.6.2
 ARG NPM_RENOVATE_VERSION=41.15.0
 ARG NPM_CLAUDE_CODE_VERSION=1.0.35
 ARG NPM_CCUSAGE_VERSION=15.2.0
+ARG NPM_REPOMIX_VERSION=0.3.9
 ARG NPM_OPENAPI_GENERATOR_CLI_VERSION=2.21.0
 ARG NPM_IBM_OPENAPI_VALIDATOR_VERSION=1.35.2
 ARG NPM_REDOCLY_CLI_VERSION=1.34.4
@@ -43,9 +44,7 @@ ARG NPM_SQL_FORMATTER_VERSION=15.6.2
 # for pip tools
 ARG PIP_PIP_VERSION=25.1.1
 ARG PIP_PIPX_VERSION=1.7.1
-
-# for pipx tools
-ARG PIPX_GITINGEST_VERSION=0.1.5
+ARG PIP_GITINGEST_VERSION=0.1.5
 
 # for other tools (github-tags)
 ARG OTHER_JQ_VERSION=1.8.0
@@ -299,11 +298,17 @@ ARG NPM_CLAUDE_CODE_VERSION
 RUN npm install -g @anthropic-ai/claude-code@${NPM_CLAUDE_CODE_VERSION}
 ENV DEVCONTAINER=true
 
-## ccusage
+# ccusage
 # https://github.com/ryoppippi/ccusage
 # https://www.npmjs.com/package/ccusage
 ARG NPM_CCUSAGE_VERSION
 RUN npm install -g ccusage@${NPM_CCUSAGE_VERSION}
+
+# repomix
+# https://github.com/yamadashy/repomix
+# https://www.npmjs.com/package/repomix
+ARG NPM_REPOMIX_VERSION
+RUN npm install -g repomix@${NPM_REPOMIX_VERSION}
 
 # openapi-generator-cli
 # https://github.com/OpenAPITools/openapi-generator
@@ -339,8 +344,8 @@ RUN pipx ensurepath
 
 # gitingest
 # https://github.com/cyclotruc/gitingest
-ARG PIPX_GITINGEST_VERSION
-RUN pipx install gitingest==${PIPX_GITINGEST_VERSION}
+ARG PIP_GITINGEST_VERSION
+RUN pip install gitingest==${PIP_GITINGEST_VERSION}
 
 # jq
 # https://github.com/jqlang/jq

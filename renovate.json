@@ -36,7 +36,6 @@
       "depNameTemplate": "github.com/go-task/task/v3",
       "versioningTemplate": "semver-coerced"
     },
-
     {
       "customType": "regex",
       "managerFilePatterns": ["/^\\.devcontainer\\/Dockerfile$/"],
@@ -82,7 +81,6 @@
       "depNameTemplate": "github.com/google/go-licenses",
       "versioningTemplate": "semver-coerced"
     },
-
     {
       "customType": "regex",
       "managerFilePatterns": ["/^\\.devcontainer\\/Dockerfile$/"],
@@ -101,7 +99,6 @@
       "depNameTemplate": "github.com/ogen-go/ogen",
       "versioningTemplate": "semver-coerced"
     },
-
     {
       "customType": "regex",
       "managerFilePatterns": ["/^\\.devcontainer\\/Dockerfile$/"],
@@ -140,7 +137,6 @@
       "depNameTemplate": "github.com/wagoodman/dive",
       "versioningTemplate": "semver-coerced"
     },
-
     {
       "customType": "regex",
       "managerFilePatterns": ["/^\\.devcontainer\\/Dockerfile$/"],
@@ -184,6 +180,15 @@
       "matchStrings": ["ARG\\s+NPM_CCUSAGE_VERSION=(?<currentValue>\\S+)"],
       "datasourceTemplate": "npm",
       "depNameTemplate": "ccusage",
+      "versioningTemplate": "npm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/^\\.devcontainer\\/Dockerfile$/"],
+      "matchStringsStrategy": "any",
+      "matchStrings": ["ARG\\s+NPM_REPOMIX_VERSION=(?<currentValue>\\S+)"],
+      "datasourceTemplate": "npm",
+      "depNameTemplate": "repomix",
       "versioningTemplate": "npm"
     },
     {
@@ -250,7 +255,7 @@
       "customType": "regex",
       "managerFilePatterns": ["/^\\.devcontainer\\/Dockerfile$/"],
       "matchStringsStrategy": "any",
-      "matchStrings": ["ARG\\s+PIPX_GITINGEST_VERSION=(?<currentValue>\\S+)"],
+      "matchStrings": ["ARG\\s+PIP_GITINGEST_VERSION=(?<currentValue>\\S+)"],
       "datasourceTemplate": "pypi",
       "depNameTemplate": "gitingest",
       "versioningTemplate": "semver-coerced"
