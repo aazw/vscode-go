@@ -2,6 +2,7 @@ go 1.24.3
 
 use (
 	.
+	./playgrounds/ast_validation_test_generator
 	./playgrounds/cobra_and_viper
 	./playgrounds/custom_error_with_stacktrace
 	./playgrounds/errors_cockroachdb

@@ -2,6 +2,17 @@
 
 ## 概要 (昇順)
 
+* [playgrounds/ast_validation_test_generator](./playgrounds/ast_validation_test_generator)
+    * Go AST を使ったバリデーションテストケース自動生成ツール
+    * 構造体の `validate` タグ（go-playground/validator形式）を解析
+    * 境界値分析・同値分割に基づくテストケースを `go generate` で自動生成
+    * 実行方法: `go generate ./playgrounds/ast_validation_test_generator/target/...`
+    * 生成ファイル:
+        * `{元ファイル名}_{構造体名小文字}_autogen_test.go` - テストケースデータ
+        * `unittestgen_helper_autogen_test.go` - ヘルパー型定義
+    * 注意: `go run` での直接実行は不可（`go:generate` 経由で設定される環境変数に依存）
+    * 未実装: 構造体名を引数で指定する機能（現状は `go:generate` の次の行の構造体のみ対象）
+
 * [playgrounds/cobra_and_viper](./playgrounds/cobra_and_viper)
     * `github.com/urfave/cli` 以外のcliライブラリの検証
     * cobraを検証してたら、configライブラリのviperもついてきたので一緒に検証
