@@ -265,6 +265,9 @@ core.*
 .claude/*
 !.claude/settings.json
 
+# devbox
+.devbox
+
 # Go binaries
 bin/
 bin/*
