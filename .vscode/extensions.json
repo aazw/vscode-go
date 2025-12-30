@@ -1,3 +1,11 @@
 {
-  "recommendations": []
+  "recommendations": [
+    "emeraldwalk.runonsave",
+    "ms-azuretools.vscode-containers",
+    "ms-azuretools.vscode-docker",
+    "tamasfe.even-better-toml",
+    "anthropic.claude-code",
+    "openai.chatgpt",
+    "golang.go"
+  ]
 }

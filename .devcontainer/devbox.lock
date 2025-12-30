@@ -1,0 +1,249 @@
+{
+  "lockfile_version": "1",
+  "packages": {
+    "dive@0.13.1": {
+      "last_modified": "2025-11-23T21:50:36Z",
+      "resolved": "github:NixOS/nixpkgs/ee09932cedcef15aaf476f9343d1dea2cb77e261#dive",
+      "source": "devbox-search",
+      "version": "0.13.1",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/5w2a833xdcnqdphv86fzaax3bap8jp7q-dive-0.13.1",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/5w2a833xdcnqdphv86fzaax3bap8jp7q-dive-0.13.1"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/kh7fzs52ba3nps3q6kv5i4z138i8llhz-dive-0.13.1",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/kh7fzs52ba3nps3q6kv5i4z138i8llhz-dive-0.13.1"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/fjykr0l189ybkpz9mv7s1rlac06200s4-dive-0.13.1",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/fjykr0l189ybkpz9mv7s1rlac06200s4-dive-0.13.1"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/wg3y7q4v0mkzzjpln7njr7w201865pbd-dive-0.13.1",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/wg3y7q4v0mkzzjpln7njr7w201865pbd-dive-0.13.1"
+        }
+      }
+    },
+    "github:NixOS/nixpkgs/nixpkgs-unstable": {
+      "last_modified": "2025-12-29T08:23:14Z",
+      "resolved": "github:NixOS/nixpkgs/0744ef1b047f07d31d9962d757ffe38ec14a4d41?lastModified=1766996594&narHash=sha256-SosfgQSqVmOkqVgNYJnxW5FvoIQX4grOcpIKNrIwz4o%3D"
+    },
+    "oapi-codegen@2.5.1": {
+      "last_modified": "2025-11-25T14:41:04Z",
+      "resolved": "github:NixOS/nixpkgs/dc205f7b4fdb04c8b7877b43edb7b73be7730081#oapi-codegen",
+      "source": "devbox-search",
+      "version": "2.5.1",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/63qvnjqcp6zv5yn0ykzl0gqwxd1njp7v-oapi-codegen-2.5.1",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/63qvnjqcp6zv5yn0ykzl0gqwxd1njp7v-oapi-codegen-2.5.1"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/yrf6crc7g8zbl669d72q7x6264m2isrd-oapi-codegen-2.5.1",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/yrf6crc7g8zbl669d72q7x6264m2isrd-oapi-codegen-2.5.1"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/fw5smgqb8s4sla31jfvjf5zqzbkw146b-oapi-codegen-2.5.1",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/fw5smgqb8s4sla31jfvjf5zqzbkw146b-oapi-codegen-2.5.1"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/rcl1zhs7052hzs6z89cgm65w0gr7a34c-oapi-codegen-2.5.1",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/rcl1zhs7052hzs6z89cgm65w0gr7a34c-oapi-codegen-2.5.1"
+        }
+      }
+    },
+    "ogen@1.16.0": {
+      "last_modified": "2025-11-23T21:50:36Z",
+      "resolved": "github:NixOS/nixpkgs/ee09932cedcef15aaf476f9343d1dea2cb77e261#ogen",
+      "source": "devbox-search",
+      "version": "1.16.0",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/phqff9sc6gm9fa5z5hpf32c53yg23xbq-ogen-1.16.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/phqff9sc6gm9fa5z5hpf32c53yg23xbq-ogen-1.16.0"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/ffj2kh44ljdsr5m4jfbsx6zb5gdx8jgr-ogen-1.16.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/ffj2kh44ljdsr5m4jfbsx6zb5gdx8jgr-ogen-1.16.0"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/0qrpxvrcdw8q70j8ms3lbh4bl8yfl0kb-ogen-1.16.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/0qrpxvrcdw8q70j8ms3lbh4bl8yfl0kb-ogen-1.16.0"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/fyy7sk821v3vxxhid2ksbsqq69x3kcil-ogen-1.16.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/fyy7sk821v3vxxhid2ksbsqq69x3kcil-ogen-1.16.0"
+        }
+      }
+    },
+    "openapi-generator-cli@7.17.0": {
+      "last_modified": "2025-11-23T21:50:36Z",
+      "resolved": "github:NixOS/nixpkgs/ee09932cedcef15aaf476f9343d1dea2cb77e261#openapi-generator-cli",
+      "source": "devbox-search",
+      "version": "7.17.0",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/c7mhjkyzfq0bf5r71qnyx53nr1m2hc3d-openapi-generator-cli-7.17.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/c7mhjkyzfq0bf5r71qnyx53nr1m2hc3d-openapi-generator-cli-7.17.0"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/z1yfas3kmykymbmqqm6cv00887zs4q05-openapi-generator-cli-7.17.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/z1yfas3kmykymbmqqm6cv00887zs4q05-openapi-generator-cli-7.17.0"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/fwm3p9qi8cs9ixgz0zswn741mgx1xh9j-openapi-generator-cli-7.17.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/fwm3p9qi8cs9ixgz0zswn741mgx1xh9j-openapi-generator-cli-7.17.0"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/iksdhhg7nipsmhbxmxn838aqrcjcjid3-openapi-generator-cli-7.17.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/iksdhhg7nipsmhbxmxn838aqrcjcjid3-openapi-generator-cli-7.17.0"
+        }
+      }
+    },
+    "redocly@2.11.1": {
+      "last_modified": "2025-11-23T21:50:36Z",
+      "resolved": "github:NixOS/nixpkgs/ee09932cedcef15aaf476f9343d1dea2cb77e261#redocly",
+      "source": "devbox-search",
+      "version": "2.11.1",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/d9gipzq25f9qjxw53213a1v451m7h6sa-redocly-2.11.1",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/d9gipzq25f9qjxw53213a1v451m7h6sa-redocly-2.11.1"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/56mh1v8hyzbbr49jbwqrpiv6f2inlwxw-redocly-2.11.1",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/56mh1v8hyzbbr49jbwqrpiv6f2inlwxw-redocly-2.11.1"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/m08mgqwp1zrjyp400q04yrnk44iri371-redocly-2.11.1",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/m08mgqwp1zrjyp400q04yrnk44iri371-redocly-2.11.1"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/3aafgnk6x59l0s5hbfgai2qymw3zbcy4-redocly-2.11.1",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/3aafgnk6x59l0s5hbfgai2qymw3zbcy4-redocly-2.11.1"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.16.0/.schema/devbox.schema.json",
+  "packages": [
+    // OpenAPI仕様からGoのサーバー/クライアントコードを生成
+    // https://github.com/oapi-codegen/oapi-codegen
+    // https://search.nixos.org/packages?show=oapi-codegen&query=oapi-codegen
+    // https://www.nixhub.io/packages/oapi-codegen
+    // https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/oa/oapi-codegen/package.nix
+    "oapi-codegen@2.5.1",
+
+    // OpenAPI v3仕様からGoコードを生成（高速・型安全）
+    // https://github.com/ogen-go/ogen
+    // https://search.nixos.org/packages?show=ogen&query=ogen
+    // https://www.nixhub.io/packages/ogen
+    // https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/og/ogen/package.nix
+    "ogen@1.16.0",
+
+    // Dockerイメージのレイヤー解析・サイズ最適化ツール
+    // https://github.com/wagoodman/dive
+    // https://search.nixos.org/packages?show=dive&query=dive
+    // https://www.nixhub.io/packages/dive
+    // https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/di/dive/package.nix
+    "dive@0.13.1",
+
+    // OpenAPI仕様から多言語のコードを生成（Java/Python/TS等）
+    // https://github.com/OpenAPITools/openapi-generator
+    // https://github.com/OpenAPITools/openapi-generator-cli
+    // https://search.nixos.org/packages?show=openapi-generator-cli&query=openapi-generator-cli
+    // https://www.nixhub.io/packages/openapi-generator-cli
+    // https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/op/openapi-generator-cli/package.nix
+    // 何故かcliではなく本体のバージョンを指定
+    "openapi-generator-cli@7.17.0",
+
+    // OpenAPI仕様のLint・バンドル・ドキュメント生成
+    // https://github.com/Redocly/redocly-cli
+    // https://search.nixos.org/packages?show=redocly&query=redocly
+    // https://www.nixhub.io/packages/redocly
+    // https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/re/redocly/package.nix
+    // redocly-cliもあるが古く更新されていない模様
+    "redocly@2.11.1"
+  ]
+}

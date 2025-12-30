@@ -1,10 +1,3 @@
-bin/
-bin/*
-**/bin/
-**/bin/*
-
-digest.txt
-
 # Created by https://www.toptal.com/developers/gitignore/api/windows,macos,linux,node,yarn,go
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,linux,node,yarn,go
 
@@ -263,3 +256,19 @@ $RECYCLE.BIN/
 # .pnp.*
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,linux,node,yarn,go
+
+# Ignore core dump files
+core
+core.*
+
+# Claude Code data (keep settings.json, ignore session data)
+.claude/*
+!.claude/settings.json
+
+# Go binaries
+bin/
+bin/*
+**/bin/
+**/bin/*
+
+digest.txt
