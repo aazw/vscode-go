@@ -29,7 +29,7 @@
     // https://www.nixhub.io/packages/openapi-generator-cli
     // https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/op/openapi-generator-cli/package.nix
     // 何故かcliではなく本体のバージョンを指定
-    "openapi-generator-cli@7.17.0",
+    "openapi-generator-cli@7.18.0",
 
     // OpenAPI仕様のLint・バンドル・ドキュメント生成
     // https://github.com/Redocly/redocly-cli
@@ -37,6 +37,6 @@
     // https://www.nixhub.io/packages/redocly
     // https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/re/redocly/package.nix
     // redocly-cliもあるが古く更新されていない模様
-    "redocly@2.11.1"
+    "redocly@2.12.6"
   ]
 }
