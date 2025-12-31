@@ -149,99 +149,99 @@
         }
       }
     },
-    "openapi-generator-cli@7.17.0": {
-      "last_modified": "2025-11-23T21:50:36Z",
-      "resolved": "github:NixOS/nixpkgs/ee09932cedcef15aaf476f9343d1dea2cb77e261#openapi-generator-cli",
+    "openapi-generator-cli@7.18.0": {
+      "last_modified": "2025-12-29T08:23:14Z",
+      "resolved": "github:NixOS/nixpkgs/0744ef1b047f07d31d9962d757ffe38ec14a4d41#openapi-generator-cli",
       "source": "devbox-search",
-      "version": "7.17.0",
+      "version": "7.18.0",
       "systems": {
         "aarch64-darwin": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/c7mhjkyzfq0bf5r71qnyx53nr1m2hc3d-openapi-generator-cli-7.17.0",
+              "path": "/nix/store/a43hbwpq3wga5ciqp4a4ngmbwisbzi1p-openapi-generator-cli-7.18.0",
               "default": true
             }
           ],
-          "store_path": "/nix/store/c7mhjkyzfq0bf5r71qnyx53nr1m2hc3d-openapi-generator-cli-7.17.0"
+          "store_path": "/nix/store/a43hbwpq3wga5ciqp4a4ngmbwisbzi1p-openapi-generator-cli-7.18.0"
         },
         "aarch64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/z1yfas3kmykymbmqqm6cv00887zs4q05-openapi-generator-cli-7.17.0",
+              "path": "/nix/store/4fggaahw9jl21ykc8iwz5x12h61knfqg-openapi-generator-cli-7.18.0",
               "default": true
             }
           ],
-          "store_path": "/nix/store/z1yfas3kmykymbmqqm6cv00887zs4q05-openapi-generator-cli-7.17.0"
+          "store_path": "/nix/store/4fggaahw9jl21ykc8iwz5x12h61knfqg-openapi-generator-cli-7.18.0"
         },
         "x86_64-darwin": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/fwm3p9qi8cs9ixgz0zswn741mgx1xh9j-openapi-generator-cli-7.17.0",
+              "path": "/nix/store/l7r5074k02py6nnzxc2q5r0ykjbcrwjb-openapi-generator-cli-7.18.0",
               "default": true
             }
           ],
-          "store_path": "/nix/store/fwm3p9qi8cs9ixgz0zswn741mgx1xh9j-openapi-generator-cli-7.17.0"
+          "store_path": "/nix/store/l7r5074k02py6nnzxc2q5r0ykjbcrwjb-openapi-generator-cli-7.18.0"
         },
         "x86_64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/iksdhhg7nipsmhbxmxn838aqrcjcjid3-openapi-generator-cli-7.17.0",
+              "path": "/nix/store/iz75n0pp1r7hrnm0vgfcgsrc63xbl31y-openapi-generator-cli-7.18.0",
               "default": true
             }
           ],
-          "store_path": "/nix/store/iksdhhg7nipsmhbxmxn838aqrcjcjid3-openapi-generator-cli-7.17.0"
+          "store_path": "/nix/store/iz75n0pp1r7hrnm0vgfcgsrc63xbl31y-openapi-generator-cli-7.18.0"
         }
       }
     },
-    "redocly@2.11.1": {
-      "last_modified": "2025-11-23T21:50:36Z",
-      "resolved": "github:NixOS/nixpkgs/ee09932cedcef15aaf476f9343d1dea2cb77e261#redocly",
+    "redocly@2.12.6": {
+      "last_modified": "2025-12-27T03:48:10Z",
+      "resolved": "github:NixOS/nixpkgs/4eec65df50d796a8fd9c146a09b5007916ce376b#redocly",
       "source": "devbox-search",
-      "version": "2.11.1",
+      "version": "2.12.6",
       "systems": {
         "aarch64-darwin": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/d9gipzq25f9qjxw53213a1v451m7h6sa-redocly-2.11.1",
+              "path": "/nix/store/810mch6yfk5x3vms68lxnzn5yc8pxn4k-redocly-2.12.6",
               "default": true
             }
           ],
-          "store_path": "/nix/store/d9gipzq25f9qjxw53213a1v451m7h6sa-redocly-2.11.1"
+          "store_path": "/nix/store/810mch6yfk5x3vms68lxnzn5yc8pxn4k-redocly-2.12.6"
         },
         "aarch64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/56mh1v8hyzbbr49jbwqrpiv6f2inlwxw-redocly-2.11.1",
+              "path": "/nix/store/lpvb0k0z3cipl2gqbvksa6dlnxw50hi6-redocly-2.12.6",
               "default": true
             }
           ],
-          "store_path": "/nix/store/56mh1v8hyzbbr49jbwqrpiv6f2inlwxw-redocly-2.11.1"
+          "store_path": "/nix/store/lpvb0k0z3cipl2gqbvksa6dlnxw50hi6-redocly-2.12.6"
         },
         "x86_64-darwin": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/m08mgqwp1zrjyp400q04yrnk44iri371-redocly-2.11.1",
+              "path": "/nix/store/2dkr7ld1w4jb3iykahyj3fqmwcijbba2-redocly-2.12.6",
               "default": true
             }
           ],
-          "store_path": "/nix/store/m08mgqwp1zrjyp400q04yrnk44iri371-redocly-2.11.1"
+          "store_path": "/nix/store/2dkr7ld1w4jb3iykahyj3fqmwcijbba2-redocly-2.12.6"
         },
         "x86_64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/3aafgnk6x59l0s5hbfgai2qymw3zbcy4-redocly-2.11.1",
+              "path": "/nix/store/m2xckfppyrkcgl0349c2hwz3spappdi5-redocly-2.12.6",
               "default": true
             }
           ],
-          "store_path": "/nix/store/3aafgnk6x59l0s5hbfgai2qymw3zbcy4-redocly-2.11.1"
+          "store_path": "/nix/store/m2xckfppyrkcgl0349c2hwz3spappdi5-redocly-2.12.6"
         }
       }
     }
