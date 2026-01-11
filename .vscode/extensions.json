@@ -6,6 +6,8 @@
     "tamasfe.even-better-toml",
     "anthropic.claude-code",
     "openai.chatgpt",
+    "jnoortheen.nix-ide", // nix
+    "jetpack-io.devbox", // devbox
     "golang.go"
   ]
 }
