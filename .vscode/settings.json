@@ -28,9 +28,7 @@
     // claude
     "**/.claude-home-cache/**": true,
     // codex
-    "**/.codex/**": true,
-    // node
-    "**/node_modules/**": true
+    "**/.codex/**": true
   },
   // 拡張子との関連付け
   "files.associations": {
