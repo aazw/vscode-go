@@ -36,7 +36,9 @@
     // https://search.nixos.org/packages?show=redocly&query=redocly
     // https://www.nixhub.io/packages/redocly
     // https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/re/redocly/package.nix
-    // redocly-cliもあるが古く更新されていない模様
+    // ※ ibm-openapi-validator/spectral の代替としても使用
+    //    デフォルトルールは同等のカバレッジ (operationId, パス, レスポンス, セキュリティ等)
+    //    追加機能: ドキュメント生成、バンドル/分割
     "redocly@2.12.6"
   ]
 }
