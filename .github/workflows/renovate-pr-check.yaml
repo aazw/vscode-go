@@ -17,7 +17,7 @@ permissions:
 
 jobs:
   detect-changes:
-    if: github.actor == 'renovate[bot]' || github.actor == 'renovate-bot'
+    # renovate[bot]以外のPRでもgo.mod変更時はビルドチェックを実行
     runs-on: ubuntu-latest
     outputs:
       go_files: ${{ steps.filter.outputs.go_files }}
@@ -65,6 +65,8 @@ jobs:
       - name: List all packages
         run: scripts/go_list_all.sh
       - name: Commit and push changes if needed
+        # 自動コミットはRenovate PRの場合のみ
+        if: github.actor == 'renovate[bot]'
         run: |
           if [[ -n "$(git status --porcelain)" ]]; then
             git config user.name  "github-actions[bot]"
@@ -86,7 +88,8 @@ jobs:
     needs:
       - detect-changes
       - go-build-check
-    if: always() && needs.detect-changes.outputs.renovate_json_file == 'true' # alwaysでgo-build-checkが該当せず前ジョブが走らなかった場合でも動かせるようになる
+    # Renovate PRでrenovate.jsonが変更された場合のみ実行
+    if: always() && github.actor == 'renovate[bot]' && needs.detect-changes.outputs.renovate_json_file == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
