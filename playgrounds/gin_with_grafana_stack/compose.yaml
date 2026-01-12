@@ -41,7 +41,7 @@ services:
   # https://hub.docker.com/r/grafana/mimir
   # https://github.com/grafana/mimir
   mimir:
-    image: grafana/mimir:2.16.1
+    image: grafana/mimir:3.0.2
     ports:
       - "9009:9009"
     command:
