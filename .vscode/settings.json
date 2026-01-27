@@ -16,8 +16,8 @@
     "**/.git": true,
     // devbox
     "**/.devbox": true,
-    // claude home
-    "**/.claude-home-cache": true
+    // devcontainer caches
+    "**/.devcontainer/.state/**": true
   },
   // VSCodeのエクスプローラーが重くなる対策 その3
   "search.exclude": {
@@ -25,10 +25,8 @@
     "**/.git/**": true,
     // devbox
     "**/.devbox/**": true,
-    // claude
-    "**/.claude-home-cache/**": true,
-    // codex
-    "**/.codex/**": true
+    // devcontainer caches
+    "**/.devcontainer/.state/**": true
   },
   // 拡張子との関連付け
   "files.associations": {
