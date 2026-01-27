@@ -3,9 +3,9 @@
 ## 外部リンク
 
 * UUID  
-  https://ja.wikipedia.org/wiki/UUID
+  <https://ja.wikipedia.org/wiki/UUID>
 * Universally Unique IDentifiers (UUIDs)  
-  https://datatracker.ietf.org/doc/html/rfc9562
+  <https://datatracker.ietf.org/doc/html/rfc9562>
 
 ## 比較対象
 

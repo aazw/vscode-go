@@ -1,13 +1,13 @@
 # playgrounds/cobra_cli
 
-* https://github.com/spf13/cobra
-* https://cobra.dev/
-* https://github.com/urfave/cli
-* https://cli.urfave.org/
+* <https://github.com/spf13/cobra>
+* <https://cobra.dev/>
+* <https://github.com/urfave/cli>
+* <https://cli.urfave.org/>
 
 ## cobra使い方 その1: cobra？viper？
 
-https://cobra.dev/#create-rootcmd
+<https://cobra.dev/#create-rootcmd>
 
 > ```go
 > func init() {
@@ -27,8 +27,8 @@ https://cobra.dev/#create-rootcmd
 
 登場人物(?)
 
-* https://github.com/spf13/cobra
-* https://github.com/spf13/viper
+* <https://github.com/spf13/cobra>
+* <https://github.com/spf13/viper>
 
 Cobra で UX の良い CLI を作り、Viper で “設定ソースの一本化” をするのが定番パターン
 
@@ -104,121 +104,121 @@ func main() {
 package main
 
 import (
-	"fmt"
-	"log"
-	"os"
-	"path/filepath"
+ "fmt"
+ "log"
+ "os"
+ "path/filepath"
 
-	"github.com/mitchellh/go-homedir" // ← ~ 展開用（なくても OK）
-	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
+ "github.com/mitchellh/go-homedir" // ← ~ 展開用（なくても OK）
+ "github.com/spf13/cobra"
+ "github.com/spf13/viper"
 )
 
 /* ----------------------------------------------------------------
    1. アプリ全体で使う設定構造体
 -----------------------------------------------------------------*/
 type Config struct {
-	Author      string `mapstructure:"author"`
-	ProjectBase string `mapstructure:"projectbase"`
-	License     string `mapstructure:"license"`
-	UseViper    bool   `mapstructure:"useViper"`
+ Author      string `mapstructure:"author"`
+ ProjectBase string `mapstructure:"projectbase"`
+ License     string `mapstructure:"license"`
+ UseViper    bool   `mapstructure:"useViper"`
 }
 
 var (
-	cfgFile string   // --config の値を格納
-	cfg     Config   // viper.Unmarshal で詰め込む構造体
-	rootCmd = &cobra.Command{
-		Use:   "mytool",
-		Short: "Cobra + Viper sample",
-		// Cobra は Execute() 時に PersistentPreRunE → RunE の順で呼ぶ。
-		PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
-			return initConfig() // 設定ロード & Unmarshal
-		},
-		RunE: func(cmd *cobra.Command, args []string) error {
-			/* ← ここから “メインロジック” に入る想定
-			     cfg に値が入った状態で自由に使える */
-			fmt.Printf("Loaded config: %+v\n", cfg)
-			return nil
-		},
-	}
+ cfgFile string   // --config の値を格納
+ cfg     Config   // viper.Unmarshal で詰め込む構造体
+ rootCmd = &cobra.Command{
+  Use:   "mytool",
+  Short: "Cobra + Viper sample",
+  // Cobra は Execute() 時に PersistentPreRunE → RunE の順で呼ぶ。
+  PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
+   return initConfig() // 設定ロード & Unmarshal
+  },
+  RunE: func(cmd *cobra.Command, args []string) error {
+   /* ← ここから “メインロジック” に入る想定
+        cfg に値が入った状態で自由に使える */
+   fmt.Printf("Loaded config: %+v\n", cfg)
+   return nil
+  },
+ }
 )
 
 /* ----------------------------------------------------------------
    2. フラグ定義 & バインド
 -----------------------------------------------------------------*/
 func init() {
-	f := rootCmd.PersistentFlags()
+ f := rootCmd.PersistentFlags()
 
-	// --- CLI フラグ --------------------------------------------
-	f.StringVarP(&cfgFile,    "config",     "c", "",  "Config file path")
-	f.String("author",        "",  "Author name")
-	f.StringP("projectbase",  "b", "",  "Base import path (e.g. github.com/you/)")
-	f.StringP("license",      "l", "",  "License name")
-	f.Bool  ("useViper",      true, "Enable Viper")
+ // --- CLI フラグ --------------------------------------------
+ f.StringVarP(&cfgFile,    "config",     "c", "",  "Config file path")
+ f.String("author",        "",  "Author name")
+ f.StringP("projectbase",  "b", "",  "Base import path (e.g. github.com/you/)")
+ f.StringP("license",      "l", "",  "License name")
+ f.Bool  ("useViper",      true, "Enable Viper")
 
-	// --- Viper へブリッジ --------------------------------------
-	viper.BindPFlag("author",      f.Lookup("author"))
-	viper.BindPFlag("projectbase", f.Lookup("projectbase"))
-	viper.BindPFlag("useViper",    f.Lookup("useViper"))
+ // --- Viper へブリッジ --------------------------------------
+ viper.BindPFlag("author",      f.Lookup("author"))
+ viper.BindPFlag("projectbase", f.Lookup("projectbase"))
+ viper.BindPFlag("useViper",    f.Lookup("useViper"))
 
-	// --- デフォルト値 ------------------------------------------
-	viper.SetDefault("author",  "NAME HERE <EMAIL>")
-	viper.SetDefault("license", "apache")
+ // --- デフォルト値 ------------------------------------------
+ viper.SetDefault("author",  "NAME HERE <EMAIL>")
+ viper.SetDefault("license", "apache")
 
-	// --- ENV も取り込む（AUTHOR=foo など） ----------------------
-	viper.SetEnvPrefix("MYTOOL")                  // AUTHOR → MYTOOL_AUTHOR
-	viper.AutomaticEnv()
-	viper.SetEnvKeyReplacer(nil) // ドット→アンダースコア変換不要なら nil
+ // --- ENV も取り込む（AUTHOR=foo など） ----------------------
+ viper.SetEnvPrefix("MYTOOL")                  // AUTHOR → MYTOOL_AUTHOR
+ viper.AutomaticEnv()
+ viper.SetEnvKeyReplacer(nil) // ドット→アンダースコア変換不要なら nil
 }
 
 /* ----------------------------------------------------------------
    3. 設定ファイル読み込み & 構造体へマッピング
 -----------------------------------------------------------------*/
 func initConfig() error {
-	// A. ファイルパスを決める
-	if cfgFile != "" {
-		// --config 指定があれば優先
-		viper.SetConfigFile(cfgFile)
-	} else {
-		home, err := homedir.Dir()
-		if err != nil {
-			return fmt.Errorf("resolve home: %w", err)
-		}
-		viper.AddConfigPath(home)
-		viper.SetConfigName(".cobra") // .cobra.yaml 等
-	}
+ // A. ファイルパスを決める
+ if cfgFile != "" {
+  // --config 指定があれば優先
+  viper.SetConfigFile(cfgFile)
+ } else {
+  home, err := homedir.Dir()
+  if err != nil {
+   return fmt.Errorf("resolve home: %w", err)
+  }
+  viper.AddConfigPath(home)
+  viper.SetConfigName(".cobra") // .cobra.yaml 等
+ }
 
-	// B. 実際に読む
-	if err := viper.ReadInConfig(); err != nil {
-		// “設定ファイルがない” 場合は無視しても良い
-		if _, notFound := err.(viper.ConfigFileNotFoundError); !notFound {
-			return fmt.Errorf("read config: %w", err)
-		}
-	}
+ // B. 実際に読む
+ if err := viper.ReadInConfig(); err != nil {
+  // “設定ファイルがない” 場合は無視しても良い
+  if _, notFound := err.(viper.ConfigFileNotFoundError); !notFound {
+   return fmt.Errorf("read config: %w", err)
+  }
+ }
 
-	// C. ファイル/ENV/CLI の最終値を構造体へ
-	// StringVar等でバインドしたviperは、configファイルの内容を変数に代入してくれるのか？
-	// → 自動では入らない
+ // C. ファイル/ENV/CLI の最終値を構造体へ
+ // StringVar等でバインドしたviperは、configファイルの内容を変数に代入してくれるのか？
+ // → 自動では入らない
     //    StringVar で渡した変数に値がセットされるのは pflag がコマンドラインをパースした瞬間だけ 
-	//    BindPFlag は「viper 側の世界へ橋渡しする」機能であり、「viper側からの逆流」はしない
-	// → 自分で読む
-	if err := viper.Unmarshal(&cfg); err != nil {
-		return fmt.Errorf("unmarshal: %w", err)
-	}
+ //    BindPFlag は「viper 側の世界へ橋渡しする」機能であり、「viper側からの逆流」はしない
+ // → 自分で読む
+ if err := viper.Unmarshal(&cfg); err != nil {
+  return fmt.Errorf("unmarshal: %w", err)
+ }
 
-	// ここで cfg 構造体が完成
-	return nil
+ // ここで cfg 構造体が完成
+ return nil
 }
 
 /* ----------------------------------------------------------------
    4. エントリポイント
 -----------------------------------------------------------------*/
 func main() {
-	if err := rootCmd.Execute(); err != nil {
-		// Cobra はエラーを返すだけなので明示的に終了させる
-		_, _ = fmt.Fprintf(os.Stderr, "error: %v\n", err)
-		os.Exit(1)
-	}
+ if err := rootCmd.Execute(); err != nil {
+  // Cobra はエラーを返すだけなので明示的に終了させる
+  _, _ = fmt.Fprintf(os.Stderr, "error: %v\n", err)
+  os.Exit(1)
+ }
 }
 
 /* ----------------------------------------------------------------

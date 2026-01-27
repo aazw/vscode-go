@@ -222,30 +222,30 @@ ok      command-line-arguments  0.008s
 | ShouldBindJSON | 未設定                               | 未設定                                      | 未設定           |
 
 * `/users/bind_json_by_binding_tag_with_json_resp`
-    * JSON型を返しているのに、 `Content-Type`が`text/plain`
-        * → BindJSONではレスポンスヘッダの上書きはできないことを意味する
+  * JSON型を返しているのに、 `Content-Type`が`text/plain`
+    * → BindJSONではレスポンスヘッダの上書きはできないことを意味する
 * `/users/bind_json_by_binding_tag_without_resp`
-    * デフォルトではレスポンスボディに値は入っていないことを意味する
+  * デフォルトではレスポンスボディに値は入っていないことを意味する
 * `/users/bind_json_by_validate_tag_with_json_resp`  
   `/users/bind_json_by_validate_tag_with_text_resp`  
   `/users/bind_json_by_validate_tag_without_resp`
-    * go-playground/validatorのデフォルトのタグの`validate`タグは効かないことを意味する
-    * ginはgo-playground/validatorのタグを変更している
-        * → `binding`
+  * go-playground/validatorのデフォルトのタグの`validate`タグは効かないことを意味する
+  * ginはgo-playground/validatorのタグを変更している
+    * → `binding`
 * `/users/should_bind_json_by_binding_tag_with_json_resp`
-    * ShouldBindJSONではレスポンスヘッダの上書きができることを意味する
+  * ShouldBindJSONではレスポンスヘッダの上書きができることを意味する
 * `/users/should_bind_json_by_binding_tag_without_resp`
-    * 200を返す
-        * 何もしなければステータスコードのデフォルト値の200を返す
-        * ShouldBindJSONはBindJSONと違い、ステータスコードも設定していないことを意味する
-    * BindJSON同様、デフォルトではレスポンスボディに値は入っていないことを意味する
+  * 200を返す
+    * 何もしなければステータスコードのデフォルト値の200を返す
+    * ShouldBindJSONはBindJSONと違い、ステータスコードも設定していないことを意味する
+  * BindJSON同様、デフォルトではレスポンスボディに値は入っていないことを意味する
 
 # 3. エラーの内容
 
 * BindJSON、ShouldBindJSONともに、バリデーションエラーの内容をそのまま返すと、システムの実装上のエラーメッセージとなる
-    * API仕様上の`name`ではなく、`CreateUserRequestWithBindingTag.Name`と表記されている
-    * `... on the 'required' tag`のような、実装上のタグが表記されている
+  * API仕様上の`name`ではなく、`CreateUserRequestWithBindingTag.Name`と表記されている
+  * `... on the 'required' tag`のような、実装上のタグが表記されている
 * ある意味情報漏洩である
 * 実装上のタグ情報を、外部向けのAPIのシステムメッセージに書き換える必要がある
-    * `gte=x`タグ → `... is greater than or equal to x` みたいなメッセージに変える
-    * `CreateUserRequestWithBindingTag.Name`のようなGoフィールド名 → `name` みたいなAPI仕様上のパラメータ名に変える
+  * `gte=x`タグ → `... is greater than or equal to x` みたいなメッセージに変える
+  * `CreateUserRequestWithBindingTag.Name`のようなGoフィールド名 → `name` みたいなAPI仕様上のパラメータ名に変える

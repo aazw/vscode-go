@@ -4,26 +4,26 @@ OpenAPIのSpecからGoのコードを生成して、それを使って実装す�
 
 ## openapi
 
-* https://www.openapis.org
-* https://swagger.io
+* <https://www.openapis.org>
+* <https://swagger.io>
 
 ## openapi-generator
 
-* https://openapi-generator.tech
-* https://github.com/OpenAPITools/openapi-generator
-* https://github.com/OpenAPITools/openapi-generator-cli
-* https://github.com/OpenAPITools/openapi-generator-pip
-* https://hub.docker.com/r/openapitools/openapi-generator-cli
-* https://hub.docker.com/r/openapitools/openapi-generator-online
+* <https://openapi-generator.tech>
+* <https://github.com/OpenAPITools/openapi-generator>
+* <https://github.com/OpenAPITools/openapi-generator-cli>
+* <https://github.com/OpenAPITools/openapi-generator-pip>
+* <https://hub.docker.com/r/openapitools/openapi-generator-cli>
+* <https://hub.docker.com/r/openapitools/openapi-generator-online>
 
 ## oapi-codegen
 
-* https://github.com/oapi-codegen/oapi-codegen
-* 良い実装例    
-    * https://github.com/oapi-codegen/oapi-codegen/tree/main/examples/minimal-server/gin/api
+* <https://github.com/oapi-codegen/oapi-codegen>
+* 良い実装例
+  * <https://github.com/oapi-codegen/oapi-codegen/tree/main/examples/minimal-server/gin/api>
 
 ```bash
-$ go generate ./...
+go generate ./...
 ```
 
 Ginは github.com/go-playground/validator を内部的に利用.

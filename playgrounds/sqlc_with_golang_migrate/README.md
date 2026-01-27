@@ -3,11 +3,11 @@
 sqlc x pgx(pgxpool) x golang-migrate の実装検証.
 
 * sqlc  
-  https://github.com/sqlc-dev/sqlc
+  <https://github.com/sqlc-dev/sqlc>
 * pgx  
-  https://github.com/jackc/pgx
+  <https://github.com/jackc/pgx>
 * golang-migrate  
-  https://github.com/golang-migrate/migrate
+  <https://github.com/golang-migrate/migrate>
 
 ## How to use
 
@@ -21,7 +21,7 @@ migrate create -ext sql -dir db/migrations -seq create_users_table
 
 ### 3. sqlc.yaml を更新する
 
-### 4. sqlc でGoのコードを生成する 
+### 4. sqlc でGoのコードを生成する
 
 ```bash
 sqlc generate

@@ -7,16 +7,16 @@
 Redis互換KVS.  
 というか、Redisのライセンスが変わったことがきっかけで、Redisからフォークされたプロジェクト.
 
-* https://valkey.io/
-* https://hub.docker.com/r/valkey/valkey
-* https://github.com/valkey-io/valkey
+* <https://valkey.io/>
+* <https://hub.docker.com/r/valkey/valkey>
+* <https://github.com/valkey-io/valkey>
 
 ### Gin middleware for session management
 
-* https://github.com/gin-contrib/sessions
-    * Valkeyに明示的に対応はしてない
-    * Redisは対応
-    * RedisStoreで、Valkeyが使えるかどうか
+* <https://github.com/gin-contrib/sessions>
+  * Valkeyに明示的に対応はしてない
+  * Redisは対応
+  * RedisStoreで、Valkeyが使えるかどうか
 
 ## 検証
 
@@ -58,10 +58,10 @@ Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-
 ### cURLで検証
 
 * cURL
-    * `-c cookie.txt`: localhost から受け付けたCookieを cookie.txt として保存
-    * `-b cookie.txt`: localhost に保存した cookie.txt を参照してCookieを送信
-    * `-w '\n'`: 最後に改行を付ける
-    * `--verbose`: 仔細を出す
+  * `-c cookie.txt`: localhost から受け付けたCookieを cookie.txt として保存
+  * `-b cookie.txt`: localhost に保存した cookie.txt を参照してCookieを送信
+  * `-w '\n'`: 最後に改行を付ける
+  * `--verbose`: 仔細を出す
 
 ```bash
 root ➜ /workspaces/vscode-go/playgrounds/gin_with_valkey (main) $ curl -c cookie.txt -b cookie.txt localhost:8080 -w '\n' --verbose

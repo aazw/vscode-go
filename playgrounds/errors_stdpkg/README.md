@@ -1,6 +1,6 @@
 # playgrounds/errors_stdpkg
 
-https://pkg.go.dev/errors
+<https://pkg.go.dev/errors>
 
 ## 例
 

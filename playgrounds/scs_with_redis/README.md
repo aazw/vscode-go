@@ -7,14 +7,14 @@ Gin用の`gin-contrib/sessions`ではなく、もっと汎用のセッション�
 
 ## セッション管理パッケージ
 
-* https://github.com/gin-contrib/sessions
-    * Gin用
+* <https://github.com/gin-contrib/sessions>
+  * Gin用
 
-* https://github.com/gorilla/sessions
-    * gorillaなパッケージ
+* <https://github.com/gorilla/sessions>
+  * gorillaなパッケージ
 
-* https://github.com/alexedwards/scs
-    * https://github.com/alexedwards/scs/tree/master/redisstore
+* <https://github.com/alexedwards/scs>
+  * <https://github.com/alexedwards/scs/tree/master/redisstore>
 
 ## 検証結果
 

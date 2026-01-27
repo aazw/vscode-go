@@ -1,7 +1,7 @@
 # playgrounds/custom_error_with_stacktrace
 
-* https://github.com/cockroachdb/errors
-* https://github.com/getsentry/sentry-go
+* <https://github.com/cockroachdb/errors>
+* <https://github.com/getsentry/sentry-go>
 
 ## 例
 
@@ -106,7 +106,6 @@ $  go run main.go -log-format json | jq
 ```
 
 ## Memo (ChatGPT)
-
 
 ```prompt
 errors.Is、errors.Asが可能なerrorsパッケージについて、機能差分な星取表をください.

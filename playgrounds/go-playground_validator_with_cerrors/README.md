@@ -1,6 +1,6 @@
 # playgrounds/go-playground_validator_with_cerrors
 
-* https://github.com/go-playground/validator
+* <https://github.com/go-playground/validator>
 
 ## main.go
 

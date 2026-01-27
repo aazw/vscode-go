@@ -1,6 +1,6 @@
 # playgrounds/errors_cockroachdb
 
-https://github.com/cockroachdb/errors
+<https://github.com/cockroachdb/errors>
 
 ## 例
 
