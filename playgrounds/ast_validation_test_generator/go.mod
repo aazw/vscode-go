@@ -4,7 +4,7 @@ go 1.24.3
 
 require (
 	github.com/cockroachdb/errors v1.12.0
-	github.com/urfave/cli/v3 v3.6.1
+	github.com/urfave/cli/v3 v3.6.2
 )
 
 require (
