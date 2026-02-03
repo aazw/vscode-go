@@ -4,7 +4,7 @@ go 1.24.3
 
 require (
 	github.com/cockroachdb/errors v1.12.0
-	github.com/getsentry/sentry-go v0.41.0
+	github.com/getsentry/sentry-go v0.42.0
 )
 
 require (
