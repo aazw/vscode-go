@@ -13,7 +13,7 @@
     // https://search.nixos.org/packages?show=ogen&query=ogen
     // https://www.nixhub.io/packages/ogen
     // https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/og/ogen/package.nix
-    "ogen@1.16.0",
+    "ogen@1.18.0",
 
     // Dockerイメージのレイヤー解析・サイズ最適化ツール
     // https://github.com/wagoodman/dive
